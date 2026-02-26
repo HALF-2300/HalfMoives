@@ -1,7 +1,7 @@
 # 🔑 How to Get a Valid YouTube Data API Key
 
 ## ❌ Problem
-The API key `86674e62869c10dfe32bd32178026942` is **NOT valid** for YouTube Data API.
+An invalid or placeholder key was used for YouTube Data API.
 
 ## ✅ Solution: Get a Real API Key
 
@@ -22,7 +22,7 @@ The API key `86674e62869c10dfe32bd32178026942` is **NOT valid** for YouTube Data
 ### Step 4: Create API Credentials
 1. Go to: https://console.cloud.google.com/apis/credentials
 2. Click "Create Credentials" → "API Key"
-3. Copy the API key (it will look like: `AIzaSy...` - much longer than what you have)
+3. Copy the API key (it will look like: `AIzaSy...` - 39 characters)
 
 ### Step 5: Restrict the API Key (Optional but Recommended)
 1. Click on your new API key to edit it
@@ -42,17 +42,16 @@ node .\make-full-movies-api.mjs
 
 ## 📝 Notes
 
-- YouTube API keys start with `AIza` and are much longer (39 characters)
+- YouTube API keys start with `AIza` and are 39 characters
 - Free tier: 10,000 units per day
 - Each search = 100 units, each video details = 1 unit
 - For 200 movies, you'll need ~20,000-30,000 units (may need to wait or upgrade)
 
 ## ⚠️ Important
 
-The key you provided (`86674e62869c10dfe32bd32178026942`) is:
-- Too short (YouTube keys are 39 characters)
-- Wrong format (should start with `AIza`)
-- Not a valid YouTube Data API key
+YouTube Data API keys:
+- Are 39 characters long
+- Start with `AIza`
+- Must be created in Google Cloud Console
 
 You **MUST** get a real API key from Google Cloud Console.
-

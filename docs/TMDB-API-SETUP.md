@@ -29,5 +29,4 @@
 node add-movies-from-tmdb.cjs
 ```
 
-This will update all 39 movies with real data from TMDB!
-
+This will update movies with real data from TMDB!

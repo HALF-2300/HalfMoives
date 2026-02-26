@@ -1,6 +1,8 @@
-# Cloudflare Pages (static frontend from Vite build)
-# Use with: npx wrangler pages deploy dist --project-name=halfmovies
-# Or in Dashboard: Build command = npm run build, Output directory = dist, Deploy command = (leave empty)
+# Cloudflare Pages / static assets (Vite build output)
+# Deploy: npx wrangler deploy  (uploads ./dist as static assets)
 name = "halfmovies-pages"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "./dist"
+
+[assets]
+directory = "./dist"

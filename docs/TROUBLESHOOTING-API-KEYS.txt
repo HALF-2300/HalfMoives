@@ -2,8 +2,7 @@
 ❌ ERROR: Invalid API Key
 ===========================================
 
-The API key you provided is NOT valid:
-86674e62869c10dfe32bd32178026942
+The API key you provided is NOT valid for YouTube Data API.
 
 YouTube Data API keys:
 - Are 39 characters long
@@ -26,4 +25,3 @@ $env:TARGET="200"
 node .\make-full-movies-api.mjs
 
 ===========================================
-

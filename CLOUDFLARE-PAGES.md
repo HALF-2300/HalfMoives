@@ -1,6 +1,8 @@
 # Cloudflare Pages – HalfMovies
 
-So the **build** succeeds and **deploy** doesn’t fail with “Could not find Vite config”.
+So the **build** succeeds and **deploy** works when Cloudflare runs `npx wrangler deploy`.
+
+The root `wrangler.toml` is set up with `[assets] directory = "./dist"`, so `npx wrangler deploy` uploads the Vite build output as static assets. No need to change the deploy command in the dashboard.
 
 ---
 
