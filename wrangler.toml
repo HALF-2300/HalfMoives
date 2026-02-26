@@ -1,6 +1,6 @@
 # Cloudflare Pages / static assets (Vite build output)
 # Deploy: npx wrangler deploy  (uploads ./dist as static assets)
-name = "halfmovies-pages"
+name = "halfmoives"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "./dist"
 
