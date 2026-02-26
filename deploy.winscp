@@ -1,0 +1,11 @@
+option batch continue
+option confirm off
+open sftp://u482001232:Ohio1122%40@82.25.83.164:65002 -hostkey="ssh-ed25519 255 xGhYCMLKpM2t9FFSectQbIkirpOVE6wBAd3wo701sTs"
+lcd .
+cd /home/u482001232/domains/halfmovies.com/public_html
+pwd
+ls
+option transfer binary
+synchronize remote . . -delete -filemask="*|node_modules/;.git/;tools/;WinSCP-upload.log;run-deploy.ps1;deploy.winscp;*.zip"
+
+exit

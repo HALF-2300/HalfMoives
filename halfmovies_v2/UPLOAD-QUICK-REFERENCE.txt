@@ -1,0 +1,38 @@
+═══════════════════════════════════════════════════════════════
+  AICore-X1 Phase 3 - Quick Upload Reference
+═══════════════════════════════════════════════════════════════
+
+📤 UPLOAD THESE FILES WHEN READY:
+
+NEW FILES (Upload these):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ server/src/ai/adaptiveCore.ts
+✅ server/src/routes/health.ts
+✅ server/src/routes/insight.ts
+✅ scripts/validate-phase3.mjs
+✅ docs/ai/phase3-deployment-summary.md
+
+UPDATED FILES (Replace these):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ server/src/index.ts
+✅ server/src/ai/recommendation.ts
+✅ docs/ai/diagnostics-report.md
+✅ docs/ai/autoevolution.md
+
+⚠️  DO NOT UPLOAD:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ .env (contains secrets)
+❌ localdata/recovery.json (auto-generated)
+❌ node_modules/
+
+AFTER UPLOAD:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Run: pnpm prisma:generate
+2. Run: pnpm build
+3. Restart server
+4. Test: curl http://your-domain/api/health/adaptive
+
+═══════════════════════════════════════════════════════════════
+See UPLOAD-CHECKLIST.md for detailed instructions
+═══════════════════════════════════════════════════════════════
+

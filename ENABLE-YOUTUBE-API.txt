@@ -1,0 +1,30 @@
+===========================================
+❌ ERROR: YouTube Data API v3 is DISABLED
+===========================================
+
+Your API key is VALID, but the YouTube Data API v3 is NOT ENABLED
+for your Google Cloud project (822996732142).
+
+===========================================
+✅ SOLUTION: Enable the API
+===========================================
+
+1. Click this link to enable it:
+   https://console.developers.google.com/apis/api/youtube.googleapis.com/overview?project=822996732142
+
+2. OR manually:
+   - Go to: https://console.cloud.google.com/
+   - Select project: 822996732142
+   - Go to: APIs & Services → Library
+   - Search: "YouTube Data API v3"
+   - Click: "Enable"
+
+3. Wait 1-2 minutes for activation
+
+4. Then run the script again:
+   $env:YT_API_KEY="AIzaSyDtGAhvBI9T5CdqLMt1XZRq5zFsiBOpv-s"
+   $env:TARGET="200"
+   node .\make-full-movies-api.mjs
+
+===========================================
+

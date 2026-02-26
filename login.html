@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Log in – HalfMovies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <style>
+    :root {
+      --bg: #050712;
+      --accent: #ff4b8b;
+      --accent-2: #4b9dff;
+      --text-main: #f9fbff;
+      --text-soft: #a6b0d8;
+      --card: #0c1023;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: radial-gradient(circle at top, #191c3b 0, #050712 46%, #020309 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .auth-card {
+      width: 100%;
+      max-width: 400px;
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(12,16,35,0.98));
+      backdrop-filter: blur(22px);
+    }
+    .auth-card h1 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .auth-card p.sub {
+      color: var(--text-soft);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .auth-card label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    .auth-card input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(8,11,26,0.8);
+      color: var(--text-main);
+      font-size: 15px;
+    }
+    .auth-card input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(255,75,139,0.2);
+    }
+    .auth-card button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .auth-card button[type="submit"]:hover {
+      opacity: 0.95;
+    }
+    .auth-card .error {
+      color: #ff6b6b;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .auth-footer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+      color: var(--text-main);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 14px;
+    }
+    .logo-link:hover { text-decoration: none; opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <a href="/" class="logo-link">← HALFMOVIES</a>
+  <div class="auth-card">
+    <h1>Log in</h1>
+    <p class="sub">Sign in with your HalfMovies account.</p>
+    <form id="login-form">
+      <div id="form-error" class="error" style="display: none;"></div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+      <button type="submit">Log in</button>
+    </form>
+    <p class="auth-footer">Don’t have an account? <a href="signup.html">Create account</a></p>
+  </div>
+  <script>
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById("form-error");
+      errEl.style.display = "none";
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+          credentials: "include",
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok) {
+          window.location.href = "/";
+          return;
+        }
+        errEl.textContent = data.message || data.error === "email_not_verified"
+          ? "Please verify your email first. Check your inbox for the verification link."
+          : (data.message || "Invalid email or password.");
+        errEl.style.display = "block";
+      } catch (err) {
+        errEl.textContent = "Network error. Try again.";
+        errEl.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>

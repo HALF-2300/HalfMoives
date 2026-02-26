@@ -1,0 +1,50 @@
+# Ensure index.html is served as the default file (not movies.json)
+DirectoryIndex index.html index.htm default.html
+
+# Allow CORS for movies.json (needed for fetch from index.html)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(json)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    </FilesMatch>
+    # Basic caching
+    <FilesMatch "\.(html|css|js|json|svg)$">
+        Header set Cache-Control "public, max-age=86400"
+    </FilesMatch>
+</IfModule>
+
+# Ensure root URL serves index.html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # IMPORTANT: Allow JSON files to be served directly (don't rewrite to index.html)
+    RewriteRule ^(.+)\.json$ - [L]
+    
+    # Force HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Canonical: redirect www to root
+    RewriteCond %{HTTP_HOST} ^www\.halfmovies\.com$ [NC]
+    RewriteRule ^(.*)$ https://halfmovies.com/$1 [L,R=301]
+
+    # If accessing root and it's trying to serve movies.json, redirect to index.html
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^$ index.html [L]
+    
+    # If someone directly accesses movies.json in browser, allow it (for API calls)
+    # But ensure root always serves index.html
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType application/json .json
+    AddType text/html .html
+    AddType text/css .css
+    AddType application/javascript .js
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+

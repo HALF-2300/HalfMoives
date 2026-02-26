@@ -1,0 +1,44 @@
+// AICollab-NX → AICore-X1: PredictiveEvent Model Proposal
+// Phase 4.0 - Predictive Cognition Integration
+
+model PredictiveEvent {
+  id                String   @id @default(cuid())
+  eventId           String   @unique // Unique event identifier
+  
+  // Prediction data
+  prediction        Json     // The predicted action/outcome
+  predictionType    String   // "movie_view" | "genre_explore" | "search" | etc.
+  confidence        Float    // 0.0 to 1.0 - confidence in prediction
+  predictedAt       DateTime @default(now())
+  
+  // Actual result
+  actualResult      Json?    // What actually happened
+  actualType        String?  // Actual action type
+  actualTimestamp   DateTime? // When it actually occurred
+  
+  // Accuracy metrics
+  accuracyScore     Float?   // 0.0 to 1.0 - how accurate the prediction was
+  wasAccurate       Boolean? // True if prediction matched actual
+  
+  // Feedback
+  feedbackTimestamp DateTime? // When feedback was recorded
+  feedbackSource    String?   // "user_action" | "system_detection" | "manual"
+  
+  // Context
+  userId            String?
+  context           Json?    // Additional context (session, time, etc.)
+  
+  // Metadata
+  sourceModule      String   @default("AICore-X1") // Which module made prediction
+  metadata          Json?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([eventId])
+  @@index([userId])
+  @@index([predictedAt])
+  @@index([predictionType])
+  @@index([wasAccurate])
+  @@index([sourceModule])
+}
+

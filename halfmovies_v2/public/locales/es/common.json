@@ -1,0 +1,13 @@
+{
+  "brand": "HalfMovies",
+  "tagline": "Streaming rápido, adaptable y multilingüe",
+  "nav": {
+    "home": "Inicio",
+    "discover": "Descubrir",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "cta": "Comienza a explorar",
+  "search_placeholder": "Busca una película o género",
+  "language": "Idioma"
+}

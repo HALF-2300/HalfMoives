@@ -1,0 +1,40 @@
+===========================================
+HOW TO UPLOAD movies.json TO HOSTINGER
+===========================================
+
+PROBLEM: Copy-pasting into Hostinger's editor corrupts encoding.
+
+SOLUTION: Upload the file directly (NOT copy-paste)
+
+METHOD 1: File Upload (Easiest)
+---------------------------------
+1. In Hostinger File Manager, go to public_html folder
+2. Click "Upload" button
+3. Select the file: movies-upload.json (from your computer)
+4. After upload, RENAME it to: movies.json
+   (Right-click the file → Rename → change to "movies.json")
+
+METHOD 2: FTP Upload (If you have FTP access)
+-----------------------------------------------
+1. Use FileZilla or any FTP client
+2. Connect to your Hostinger FTP
+3. Navigate to public_html folder
+4. Upload movies-upload.json
+5. Rename it to movies.json
+
+METHOD 3: Direct File Creation (If upload doesn't work)
+--------------------------------------------------------
+1. In Hostinger File Manager, click "New File"
+2. Name it: movies.json
+3. Open the file
+4. Copy ALL content from movies-upload.json (from your computer)
+5. Paste into the editor
+6. Save
+
+IMPORTANT NOTES:
+- Use movies-upload.json (minified, single line) - it's less likely to corrupt
+- The website now has automatic encoding fixes, so even if there's minor corruption, it will work
+- After uploading, test at: https://halfmovies.com/movies.json
+- You should see clean JSON without â€" or LÃ©onetti
+
+===========================================

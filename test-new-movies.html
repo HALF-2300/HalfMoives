@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test New Movies</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #050712;
+      color: #f9fbff;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .error { color: #ff4b8b; }
+    .success { color: #4b9dff; }
+    .info { color: #a6b0d8; }
+    .warning { color: #ffaa00; }
+    pre { background: #0c1023; padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); }
+    .movie-item { padding: 10px; margin: 5px 0; background: #0c1023; border-radius: 5px; border-left: 3px solid #4b9dff; }
+    .movie-item.missing { border-left-color: #ff4b8b; }
+    .movie-item.has-issues { border-left-color: #ffaa00; }
+    h2 { margin-top: 30px; color: #ff4b8b; }
+    ul { margin: 10px 0; padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Test New Movies Loading</h1>
+  <div id="status">Loading...</div>
+  <div id="results"></div>
+
+  <script>
+    const NEW_MOVIE_IDS = [
+      'the_fall_2006', 'her_2013', 'only_lovers_left_alive_2013', 
+      'call_me_by_your_name_2017', 'lost_in_translation_2003', 
+      'drive_2011', 'blade_runner_2049_2017', 'the_neon_demon_2016', 
+      'spring_breakers_2012', 'only_god_forgives_2013', 
+      'paterson_2016', 'columbus_2017', 'a_ghost_story_2017', 
+      'moonlight_2016', 'portrait_of_a_lady_on_fire_2019', 
+      'the_grand_budapest_hotel_2014', 'la_la_land_2016', 
+      'in_the_mood_for_love_2000', 'the_green_knight_2021', 'amlie_2001'
+    ];
+
+    async function testNewMovies() {
+      const status = document.getElementById('status');
+      const results = document.getElementById('results');
+      
+      status.innerHTML = '<p class="info">🔄 Testing movies.json loading...</p>';
+      
+      try {
+        // Try multiple paths
+        let response = null;
+        const paths = ['movies.json', './movies.json', '/movies.json', '/api/movies'];
+        
+        for (const path of paths) {
+          try {
+            response = await fetch(path);
+            if (response.ok) {
+              status.innerHTML += `<p class="success">✅ Found movies.json at: ${path}</p>`;
+              break;
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+        
+        if (!response || !response.ok) {
+          status.innerHTML += `<p class="error">❌ Cannot load movies.json from any path</p>`;
+          results.innerHTML = `
+            <h2>Possible Issues:</h2>
+            <ul>
+              <li>File not uploaded to server</li>
+              <li>File in wrong directory (should be same as index.html)</li>
+              <li>File name incorrect (must be exactly "movies.json")</li>
+              <li>Server permissions issue</li>
+            </ul>
+            <p class="info">Try visiting: <a href="movies.json" style="color: #4b9dff;">movies.json</a> directly in your browser</p>
+          `;
+          return;
+        }
+        
+        const text = await response.text();
+        status.innerHTML += `<p class="success">✅ File loaded! Size: ${(text.length / 1024).toFixed(2)} KB</p>`;
+        
+        try {
+          const movies = JSON.parse(text);
+          status.innerHTML += `<p class="success">✅ JSON is valid! Total movies: ${movies.length}</p>`;
+          
+          // Check for new movies
+          const foundMovies = [];
+          const missingMovies = [];
+          const moviesWithIssues = [];
+          
+          NEW_MOVIE_IDS.forEach(id => {
+            const movie = movies.find(m => m.id === id);
+            if (movie) {
+              const issues = [];
+              if (!movie.title) issues.push('missing title');
+              if (!movie.posterUrl && !movie.thumbnailUrl) issues.push('missing poster/thumbnail');
+              if (!movie.genres || movie.genres.length === 0) issues.push('missing genres');
+              
+              if (issues.length > 0) {
+                moviesWithIssues.push({ movie, issues });
+              } else {
+                foundMovies.push(movie);
+              }
+            } else {
+              missingMovies.push(id);
+            }
+          });
+          
+          // Display results
+          let html = '';
+          
+          html += `<h2>📊 Summary</h2>`;
+          html += `<p class="success">✅ Found: ${foundMovies.length}/${NEW_MOVIE_IDS.length} movies</p>`;
+          if (missingMovies.length > 0) {
+            html += `<p class="error">❌ Missing: ${missingMovies.length} movies</p>`;
+          }
+          if (moviesWithIssues.length > 0) {
+            html += `<p class="warning">⚠️ Issues: ${moviesWithIssues.length} movies</p>`;
+          }
+          
+          if (foundMovies.length > 0) {
+            html += `<h2>✅ Found Movies (${foundMovies.length})</h2>`;
+            foundMovies.forEach(m => {
+              html += `<div class="movie-item">
+                <strong>${m.title}</strong> (${m.year}) - 
+                Genres: ${(m.genres || []).join(', ') || 'None'} - 
+                ${m.hlsUrl ? 'Has video URL' : 'No video URL (will use poster)'}
+              </div>`;
+            });
+          }
+          
+          if (missingMovies.length > 0) {
+            html += `<h2>❌ Missing Movies (${missingMovies.length})</h2>`;
+            html += `<ul>`;
+            missingMovies.forEach(id => {
+              html += `<li class="error">${id}</li>`;
+            });
+            html += `</ul>`;
+          }
+          
+          if (moviesWithIssues.length > 0) {
+            html += `<h2>⚠️ Movies With Issues (${moviesWithIssues.length})</h2>`;
+            moviesWithIssues.forEach(({ movie, issues }) => {
+              html += `<div class="movie-item has-issues">
+                <strong>${movie.title || movie.id}</strong>: ${issues.join(', ')}
+              </div>`;
+            });
+          }
+          
+          // Check if movies without hlsUrl will display
+          const moviesWithoutHls = foundMovies.filter(m => !m.hlsUrl || m.hlsUrl === null);
+          if (moviesWithoutHls.length > 0) {
+            html += `<h2>ℹ️ Movies Without Video URL (${moviesWithoutHls.length})</h2>`;
+            html += `<p class="info">These movies should still display if they have posterUrl or thumbnailUrl:</p>`;
+            moviesWithoutHls.forEach(m => {
+              const hasPoster = m.posterUrl && !m.posterUrl.includes('placehold');
+              const hasThumb = m.thumbnailUrl && !m.thumbnailUrl.includes('placehold');
+              html += `<div class="movie-item ${hasPoster || hasThumb ? '' : 'has-issues'}">
+                <strong>${m.title}</strong>: 
+                poster=${hasPoster ? '✅' : '❌'}, 
+                thumbnail=${hasThumb ? '✅' : '❌'}
+              </div>`;
+            });
+          }
+          
+          // Browser cache check
+          html += `<h2>💡 Troubleshooting</h2>`;
+          html += `<ul>
+            <li>Clear browser cache (Ctrl+Shift+Delete or Cmd+Shift+Delete)</li>
+            <li>Hard refresh the page (Ctrl+F5 or Cmd+Shift+R)</li>
+            <li>Check browser console (F12) for errors</li>
+            <li>Verify movies.json is in the same folder as index.html</li>
+            <li>Check file permissions on server (should be readable)</li>
+          </ul>`;
+          
+          results.innerHTML = html;
+          
+        } catch (parseError) {
+          status.innerHTML += `<p class="error">❌ JSON Parse Error: ${parseError.message}</p>`;
+          results.innerHTML = `
+            <h2>JSON Parse Error</h2>
+            <p class="error">The JSON file is invalid. Check:</p>
+            <ul>
+              <li>File starts with [</li>
+              <li>File ends with ]</li>
+              <li>No trailing commas</li>
+              <li>All strings are properly quoted</li>
+            </ul>
+            <p class="info">First 500 characters:</p>
+            <pre>${text.substring(0, 500)}</pre>
+          `;
+        }
+        
+      } catch (error) {
+        status.innerHTML += `<p class="error">❌ Network Error: ${error.message}</p>`;
+        results.innerHTML = `
+          <h2>Network Error</h2>
+          <p class="error">Cannot fetch movies.json. Check:</p>
+          <ul>
+            <li>Server is running</li>
+            <li>File exists on server</li>
+            <li>CORS is enabled (check .htaccess)</li>
+            <li>Check browser console (F12) for details</li>
+          </ul>
+        `;
+      }
+    }
+    
+    testNewMovies();
+  </script>
+</body>
+</html>
+

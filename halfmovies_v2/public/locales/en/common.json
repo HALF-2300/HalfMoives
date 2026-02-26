@@ -1,0 +1,13 @@
+{
+  "brand": "HalfMovies",
+  "tagline": "Fast, adaptive, multilingual streaming",
+  "nav": {
+    "home": "Home",
+    "discover": "Discover",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "cta": "Start exploring",
+  "search_placeholder": "Search for a movie or genre",
+  "language": "Language"
+}

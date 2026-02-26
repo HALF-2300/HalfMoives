@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Movies - HalfMovies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        .warning { background: #f59e0b; }
+        .info { background: #3b82f6; }
+        .movie-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            border-left: 3px solid #3b82f6;
+        }
+        .bad-movie {
+            border-left-color: #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+        pre {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Movies Verification</h1>
+    <div id="status"></div>
+    <div id="results"></div>
+
+    <script>
+        const badMovies = [
+            'Inside the Mind of a Killer',
+            'The Universe Documentary',
+            'Ancient Civilizations Documentary'
+        ];
+
+        async function verifyMovies() {
+            const statusDiv = document.getElementById('status');
+            const resultsDiv = document.getElementById('results');
+            
+            statusDiv.innerHTML = '<div class="status info">Loading movies.json...</div>';
+
+            try {
+                // Add cache-busting
+                const cacheBuster = `?v=${Date.now()}`;
+                const response = await fetch(`movies.json${cacheBuster}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const movies = await response.json();
+                
+                // Check total count
+                let html = `<div class="status ${movies.length === 109 ? 'success' : 'warning'}">`;
+                html += `<strong>Total Movies:</strong> ${movies.length} ${movies.length === 109 ? '✅' : '⚠️ (Expected 109)'}`;
+                html += `</div>`;
+
+                // Check for bad movies
+                const foundBad = movies.filter(m => badMovies.includes(m.title));
+                if (foundBad.length > 0) {
+                    html += `<div class="status error">`;
+                    html += `<strong>❌ Found ${foundBad.length} bad movie(s):</strong><ul>`;
+                    foundBad.forEach(m => {
+                        html += `<li>${m.title} (ID: ${m.id})</li>`;
+                    });
+                    html += `</ul></div>`;
+                } else {
+                    html += `<div class="status success">✅ No bad movies found</div>`;
+                }
+
+                // Check YouTube links
+                const withoutYoutube = movies.filter(m => {
+                    const url = m.hlsUrl || m.url || '';
+                    return !url || (!url.includes('youtube.com/embed') && !url.includes('youtube.com/watch') && !url.includes('youtu.be/'));
+                });
+
+                if (withoutYoutube.length > 0) {
+                    html += `<div class="status warning">`;
+                    html += `<strong>⚠️ ${withoutYoutube.length} movies without YouTube links:</strong>`;
+                    html += `<ul>`;
+                    withoutYoutube.slice(0, 10).forEach(m => {
+                        html += `<li>${m.title}</li>`;
+                    });
+                    if (withoutYoutube.length > 10) {
+                        html += `<li>... and ${withoutYoutube.length - 10} more</li>`;
+                    }
+                    html += `</ul></div>`;
+                } else {
+                    html += `<div class="status success">✅ All movies have YouTube links</div>`;
+                }
+
+                // Show sample movies
+                html += `<div class="status info">`;
+                html += `<strong>Sample Movies (first 10):</strong>`;
+                html += `<div style="margin-top: 10px;">`;
+                movies.slice(0, 10).forEach(m => {
+                    const hasYoutube = (m.hlsUrl || m.url || '').includes('youtube');
+                    html += `<div class="movie-item ${badMovies.includes(m.title) ? 'bad-movie' : ''}">`;
+                    html += `<strong>${m.title}</strong> (${m.year || 'N/A'}) - ${hasYoutube ? '✅ YouTube' : '❌ No YouTube'}`;
+                    html += `</div>`;
+                });
+                html += `</div></div>`;
+
+                // Show URL info
+                html += `<div class="status info">`;
+                html += `<strong>Loaded from:</strong> ${response.url}`;
+                html += `<br><strong>Cache-busting:</strong> ${cacheBuster}`;
+                html += `</div>`;
+
+                statusDiv.innerHTML = html;
+                resultsDiv.innerHTML = '';
+
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+                resultsDiv.innerHTML = `<pre>${error.stack}</pre>`;
+            }
+        }
+
+        // Run verification
+        verifyMovies();
+    </script>
+</body>
+</html>
+

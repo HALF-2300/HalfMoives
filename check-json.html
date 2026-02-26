@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check JSON Files</title>
+    <style>
+        body { font-family: Arial; background: #0f172a; color: #fff; padding: 20px; }
+        .status { padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        .info { background: #3b82f6; }
+        pre { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 JSON Files Checker</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function checkFiles() {
+            const results = document.getElementById('results');
+            let html = '';
+            
+            // Check movies.json
+            try {
+                const cacheBuster = `?v=${Date.now()}`;
+                const res = await fetch(`movies.json${cacheBuster}`);
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+                
+                const text = await res.text();
+                const movies = JSON.parse(text);
+                
+                html += `<div class="status success">✅ movies.json is valid</div>`;
+                html += `<div class="status info">`;
+                html += `<strong>Size:</strong> ${(text.length/1024).toFixed(2)} KB<br>`;
+                html += `<strong>Movies:</strong> ${movies.length}<br>`;
+                html += `<strong>Expected:</strong> 109<br>`;
+                html += `<strong>Status:</strong> ${movies.length === 109 ? '✅ CORRECT' : '⚠️ WRONG'}`;
+                html += `</div>`;
+                
+                // Check for bad movies
+                const bad = ['Inside the Mind of a Killer', 'The Universe Documentary', 'Ancient Civilizations Documentary'];
+                const found = movies.filter(m => bad.includes(m.title));
+                if (found.length > 0) {
+                    html += `<div class="status error">❌ Found bad movies: ${found.map(m => m.title).join(', ')}</div>`;
+                } else {
+                    html += `<div class="status success">✅ No bad movies found</div>`;
+                }
+                
+            } catch (e) {
+                html += `<div class="status error">❌ movies.json Error: ${e.message}</div>`;
+            }
+            
+            // Check searchIndex.json
+            try {
+                const cacheBuster = `?v=${Date.now()}`;
+                const res = await fetch(`searchIndex.json${cacheBuster}`);
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+                
+                const text = await res.text();
+                const si = JSON.parse(text);
+                
+                html += `<div class="status success">✅ searchIndex.json is valid</div>`;
+                html += `<div class="status info">`;
+                html += `<strong>Size:</strong> ${(text.length/1024).toFixed(2)} KB<br>`;
+                html += `<strong>Movies:</strong> ${si.movies ? si.movies.length : 'N/A'}<br>`;
+                html += `<strong>Expected:</strong> 109<br>`;
+                html += `<strong>Status:</strong> ${si.movies && si.movies.length === 109 ? '✅ CORRECT' : '⚠️ WRONG'}`;
+                html += `</div>`;
+                
+            } catch (e) {
+                html += `<div class="status error">❌ searchIndex.json Error: ${e.message}</div>`;
+            }
+            
+            results.innerHTML = html;
+        }
+        
+        checkFiles();
+    </script>
+</body>
+</html>
+

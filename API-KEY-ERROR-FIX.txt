@@ -1,0 +1,29 @@
+===========================================
+❌ ERROR: Invalid API Key
+===========================================
+
+The API key you provided is NOT valid:
+86674e62869c10dfe32bd32178026942
+
+YouTube Data API keys:
+- Are 39 characters long
+- Start with "AIza"
+- Look like: AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz1234567
+
+===========================================
+✅ SOLUTION: Get Real API Key
+===========================================
+
+1. Go to: https://console.cloud.google.com/
+2. Create/Select a project
+3. Enable "YouTube Data API v3"
+4. Create API Credentials → API Key
+5. Copy the new key (starts with AIza...)
+
+Then run:
+$env:YT_API_KEY="YOUR_REAL_AIza_KEY_HERE"
+$env:TARGET="200"
+node .\make-full-movies-api.mjs
+
+===========================================
+

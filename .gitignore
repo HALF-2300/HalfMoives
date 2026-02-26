@@ -1,0 +1,24 @@
+# Traffic Seeder State (sensitive)
+.traffic-seeder-state.json
+# Auth (sensitive)
+users.json
+sessions.json
+# Environment variables
+.env
+.env.local
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+

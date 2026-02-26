@@ -1,0 +1,3443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HalfMovies – Watch Curated Movies Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="HalfMovies – Watch curated movies, thrillers, indie films, and hidden gems online." />
+  <meta name="keywords" content="movies, films, cinema, streaming, curated movies, independent films, psychological thrillers, sci-fi movies, drama films, watch movies online, film streaming" />
+  <meta name="author" content="HalfMovies" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="canonical" href="https://halfmovies.com/" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://halfmovies.com/" />
+  <meta property="og:title" content="HalfMovies – Worlds of Cinema" />
+  <meta property="og:description" content="A quiet, cinematic home for people who still watch on purpose. Curated movies, psychological thrillers, and independent films." />
+  <meta property="og:image" content="https://halfmovies.com/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="HalfMovies" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://halfmovies.com/" />
+  <meta name="twitter:title" content="HalfMovies – Worlds of Cinema" />
+  <meta name="twitter:description" content="A quiet, cinematic home for people who still watch on purpose. Curated movies and independent films." />
+  <meta name="twitter:image" content="https://halfmovies.com/og-image.svg" />
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "HalfMovies",
+    "url": "https://halfmovies.com/",
+    "description": "A cinematic home for curated movies, psychological thrillers, and independent films",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://halfmovies.com/search-results.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #050712;
+      --bg-alt: #080b1a;
+      --accent: #ff4b8b;
+      --accent-soft: rgba(255, 75, 139, 0.2);
+      --accent-2: #4b9dff;
+      --text-main: #f9fbff;
+      --text-soft: #a6b0d8;
+      --card: #0c1023;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow-soft: 0 18px 45px rgba(0,0,0,0.65);
+      --shadow-glow: 0 0 38px rgba(255,75,139,0.55);
+      --pill: rgba(15,20,40,0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    html, body {
+      background: radial-gradient(circle at top, #191c3b 0, #050712 46%, #020309 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+      min-height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    header.site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 18px;
+      margin-bottom: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(8, 11, 26, 0.95)
+        );
+      backdrop-filter: blur(22px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.75);
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .logo:hover {
+      color: var(--text-main);
+      opacity: 0.95;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .logo-wordmark {
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    nav.main-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    nav.main-nav a {
+      padding: 6px 0;
+      position: relative;
+    }
+
+    nav.main-nav a span {
+      opacity: 0.8;
+    }
+
+    nav.main-nav a.active span {
+      color: var(--text-main);
+      opacity: 1;
+    }
+
+    nav.main-nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 26px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .tag-pill {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(10,15,40,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-soft);
+    }
+
+    .tag-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .user-spot {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-spot .user-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: radial-gradient(circle at 0 0, rgba(255,255,255,0.6), rgba(255,255,255,0) 36%), #141829;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .user-spot .user-label {
+      font-size: 11px;
+      color: var(--text-soft);
+      opacity: 0.8;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    section.hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 28px;
+      margin-top: 32px;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    .hero-left {
+      padding-right: 10px;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+    }
+
+    .hero-kicker-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(75,157,255,0.4);
+      background: rgba(8,16,32,0.8);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    h1.hero-title {
+      font-size: clamp(32px, 4vw, 44px);
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+
+    h1.hero-title span.accent {
+      background: linear-gradient(135deg, #ffb2d5 0, #ff4b8b 40%, #ffe38b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-soft);
+      max-width: 440px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .meta-chip {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 5px 11px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(8,11,24,0.9);
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .meta-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent-2);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .btn-primary {
+      padding: 11px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: #050712;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      box-shadow: var(--shadow-glow);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #050712;
+    }
+
+    .btn-ghost {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-soft);
+      background: rgba(7,9,20,0.85);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 6px;
+      background: radial-gradient(circle at 0 0, #fff, rgba(255,255,255,0.1) 65%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #050712;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
+
+    .hero-note span {
+      color: #e5ffb3;
+    }
+
+    .hero-right {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at 0 0, rgba(255,255,255,0.24), transparent 50%),
+        radial-gradient(circle at 100% 0, rgba(255,75,139,0.66), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(75,157,255,0.55), transparent 55%),
+        linear-gradient(145deg, rgba(3,5,16,0.9), #050712 75%);
+      padding: 16px 16px 16px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen-frame {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.16), transparent 40%), rgba(5,7,22,0.98);
+      padding: 14px;
+    }
+
+    .screen-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .screen-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .screen-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+    }
+
+    .screen-dot:nth-child(1) {
+      background: #ff5f57;
+    }
+
+    .screen-dot:nth-child(2) {
+      background: #febc2e;
+    }
+
+    .screen-dot:nth-child(3) {
+      background: #28c840;
+    }
+
+    .screen-tabs {
+      font-size: 11px;
+      display: flex;
+      gap: 8px;
+      color: var(--text-soft);
+    }
+
+    .screen-tabs span.active {
+      color: #ffffff;
+    }
+
+    .screen-main {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 12px;
+    }
+
+    .hero-poster-main {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: 190px;
+      background: radial-gradient(circle at 0 0, rgba(255,255,255,0.35), transparent 46%), linear-gradient(135deg, #171b3c, #050712);
+      display: flex;
+      align-items: flex-end;
+      padding: 18px;
+      isolation: isolate;
+    }
+
+    .hero-poster-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.1));
+      mix-blend-mode: multiply;
+      opacity: 0.95;
+      z-index: -1;
+    }
+
+    .hero-poster-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.66);
+      margin-bottom: 4px;
+    }
+
+    .hero-poster-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .hero-poster-meta {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .hero-poster-chip-row {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .hero-poster-chip {
+      font-size: 10px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(8,12,25,0.9);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .hero-poster-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(120deg, #ffb2d5, #ff4b8b);
+      color: #050712;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.8);
+    }
+
+    .hero-poster-btn span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(5,7,18,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffb2d5;
+      font-size: 10px;
+    }
+
+    .hero-poster-tagline {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 11px;
+      text-align: right;
+      color: #fbe6ff;
+      max-width: 110px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.9);
+    }
+
+    .screen-side {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mini-row-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .mini-card {
+      border-radius: 12px;
+      background: radial-gradient(circle at 0 0, rgba(255,255,255,0.5), transparent 45%), linear-gradient(145deg, #171b3c, #040614);
+      min-height: 80px;
+      padding: 7px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      font-size: 11px;
+    }
+
+    .mini-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to top, rgba(0,0,0,0.86), transparent);
+      opacity: 0.96;
+      z-index: 0;
+    }
+
+    .mini-card span.label {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .mini-card span.sub {
+      position: relative;
+      z-index: 1;
+      color: var(--text-soft);
+      font-size: 10px;
+    }
+
+    .mini-badge {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+      font-size: 9px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #f9fbff;
+      border: 1px solid rgba(255,255,255,0.16);
+      z-index: 1;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .pill-filter-row {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .pill-filter {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(7,9,21,0.95);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-soft);
+      cursor: default;
+    }
+
+    .pill-filter.active {
+      background: linear-gradient(120deg, rgba(255,75,139,0.07), rgba(75,157,255,0.12));
+      border-color: rgba(255,75,139,0.6);
+      color: #ffffff;
+    }
+
+    .load-more-wrap {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 24px 16px;
+    }
+
+    .load-more-btn {
+      padding: 12px 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(8,11,26,0.9);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .load-more-btn:hover {
+      background: linear-gradient(120deg, rgba(255,75,139,0.15), rgba(75,157,255,0.15));
+      border-color: rgba(255,75,139,0.5);
+    }
+
+    .browse-sort-select {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(7,9,20,0.9);
+      color: var(--text-soft);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .media-card .browse-fav-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 3;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .media-card .browse-fav-icon:hover {
+      transform: scale(1.1);
+      background: rgba(0,0,0,0.8);
+    }
+
+    .media-card .browse-fav-icon.in-favorites {
+      background: rgba(255,75,139,0.9);
+      border-color: rgba(255,75,139,0.9);
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .media-card {
+      border-radius: var(--radius-md);
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      min-height: 230px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .media-poster {
+      position: relative;
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(80%); /* darker cinematic look */
+    }
+
+    .media-poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.1));
+      opacity: 0.96;
+    }
+
+    .media-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(5,7,18,0.86);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #f7f3ff;
+      z-index: 1;
+    }
+
+    .media-body {
+      padding: 10px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .media-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .media-meta {
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .media-meta span + span::before {
+      content: "•";
+      margin: 0 4px;
+    }
+
+    .media-foot {
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .media-pill {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(11,15,36,0.9);
+      color: var(--text-soft);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .media-play {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-2);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: default;
+      letter-spacing: 0.02em;
+    }
+
+    .media-play span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 12px rgba(255, 75, 139, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #050712;
+      font-size: 9px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .plan-card {
+      border-radius: var(--radius-md);
+      background: linear-gradient(145deg, #090b1d, #040614);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 14px 14px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-pill {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(8,11,26,0.9);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .plan-pill span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-2);
+    }
+
+    .plan-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .plan-price {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .plan-price span {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-soft);
+    }
+
+    .plan-note {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .plan-list {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .plan-list li::before {
+      content: "• ";
+      color: var(--accent-2);
+    }
+
+    .plan-cta-row {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .plan-cta-row .plan-btn {
+      border-radius: 999px;
+      padding: 6px 11px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(5,8,20,0.95);
+      color: #f9fbff;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .plan-featured {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(255,75,139,0.12);
+      border: 1px solid rgba(255,75,139,0.7);
+      color: #ffe6f3;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .contact-info {
+      font-size: 12px;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .contact-info strong {
+      color: #ffffff;
+    }
+
+    .contact-email,
+    .contact-phone {
+      color: #f5ffb5;
+      font-weight: 500;
+    }
+
+    .contact-note {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .social-pill {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(6,10,26,0.95);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 11px;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .contact-card {
+      border-radius: var(--radius-md);
+      background: linear-gradient(145deg, #091127, #040614);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 14px 14px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .contact-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .contact-input {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(5,7,18,0.96);
+      padding: 7px 11px;
+      font-size: 11px;
+      color: #f9fbff;
+    }
+
+    .contact-input::placeholder {
+      color: rgba(166,176,216,0.6);
+    }
+
+    .contact-button {
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #050712;
+      font-size: 11px;
+      padding: 8px 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .faq-card {
+      border-radius: var(--radius-md);
+      background: #080b1a;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 11px 12px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .faq-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #ffffff;
+      font-size: 12px;
+    }
+
+    footer.site-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 10px;
+      padding-top: 14px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .footer-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-soft);
+    }
+
+    /* PLANS GLOW SECTION */
+    .plans-container {
+      width: 100%;
+      padding: 64px 0;
+      text-align: center;
+      color: var(--text);
+    }
+
+    .plans-title {
+      font-size: clamp(1.9rem, 2.6vw, 2.4rem);
+      margin-bottom: 34px;
+      font-weight: 700;
+      color: #f9fbff;
+      letter-spacing: 0.02em;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      padding: 0 6px;
+    }
+
+    .plan-card {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(255, 75, 139, 0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      text-align: left;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 35px rgba(255, 75, 139, 0.32);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .plan-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .price {
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+      font-weight: 600;
+      color: #fdf2f8;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 0.95rem;
+      color: var(--text-soft);
+    }
+
+    .features li {
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .plan-btn {
+      width: 100%;
+      padding: 12px 0;
+      background: #f44b8b;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 12px 30px rgba(255, 75, 139, 0.35);
+    }
+
+    .plan-btn:hover {
+      background: #ff5fa1;
+      transform: translateY(-1px);
+      box-shadow: 0 16px 38px rgba(255, 75, 139, 0.45);
+    }
+
+    .plan-btn:active {
+      transform: translateY(0);
+    }
+
+    .plan-card.free {
+      border-color: rgba(148, 163, 184, 0.22);
+    }
+
+    .plan-card.plus {
+      box-shadow: 0 0 25px rgba(75, 157, 255, 0.25);
+    }
+
+    .plan-card.studio {
+      box-shadow:
+        0 0 28px rgba(255, 75, 139, 0.32),
+        0 0 22px rgba(75, 157, 255, 0.24);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .plan-btn.highlight {
+      background: linear-gradient(135deg, #ff5fa1, #4b9dff);
+    }
+
+    /* Card theme toggles */
+    .card-theme {
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-dark {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .card-night {
+      background: linear-gradient(145deg, rgba(5, 7, 18, 0.88), rgba(9, 12, 28, 0.92));
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-ultra {
+      background: linear-gradient(135deg, rgba(255, 75, 139, 0.12), rgba(75, 157, 255, 0.14));
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 0 28px rgba(255, 75, 139, 0.35),
+        0 0 22px rgba(75, 157, 255, 0.28),
+        0 18px 38px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-ultra::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 40%);
+      pointer-events: none;
+    }
+
+    .card-theme:hover {
+      transform: translateY(-4px);
+    }
+
+    .theme-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      font-size: 0.8rem;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ai-mode-toggle {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.85;
+    }
+
+    .ai-mode-toggle:hover {
+      opacity: 1;
+    }
+
+    .ai-mode-toggle::before {
+      content: "●";
+      font-size: 0.6rem;
+      color: #64748b;
+    }
+
+    .ai-mode-on .ai-mode-toggle {
+      background: linear-gradient(135deg, #ff5fa1, #4b9dff);
+      color: #020617;
+      border-color: transparent;
+    }
+
+    .ai-mode-on .ai-mode-toggle::before {
+      color: #16a34a;
+    }
+
+    /* AI assistant bubble */
+    .ai-assistant-bubble {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff5fa1, #4b9dff);
+      box-shadow:
+        0 0 18px rgba(255, 75, 139, 0.6),
+        0 8px 24px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 40;
+    }
+
+    .ai-assistant-icon {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #020617;
+    }
+
+    .ai-assistant-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 76px;
+      width: 320px;
+      max-height: 420px;
+      background: rgba(10, 15, 40, 0.96);
+      border-radius: 18px;
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.9),
+        0 0 26px rgba(59, 130, 246, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 50;
+    }
+
+    .ai-assistant-panel.open {
+      display: flex;
+    }
+
+    .ai-assistant-header {
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: radial-gradient(circle at top left, rgba(255, 75, 139, 0.26), transparent 55%);
+      font-size: 0.9rem;
+    }
+
+    .ai-assistant-header button {
+      background: transparent;
+      border: none;
+      color: #e5e7eb;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .ai-assistant-body {
+      padding: 12px 14px 14px;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-ai-intro {
+      opacity: 0.85;
+    }
+
+    .ai-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ai-suggestions button {
+      border: none;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      cursor: pointer;
+    }
+
+    .ai-suggestions button:hover {
+      background: rgba(30, 64, 175, 0.9);
+    }
+
+    .ai-input-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .ai-input-row input {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 6px 10px;
+      color: #e5e7eb;
+      font-size: 0.8rem;
+    }
+
+    .ai-input-row button {
+      border-radius: 999px;
+      border: none;
+      padding: 6px 10px;
+      background: rgba(59, 130, 246, 0.9);
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    /* Page transition overlay */
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2), #020617 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 60;
+    }
+
+    .page-transition-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .theme-switcher span {
+      opacity: 0.8;
+    }
+
+    .theme-switcher button {
+      background: transparent;
+      border: none;
+      color: #e5e7eb;
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .theme-switcher button:hover {
+      opacity: 1;
+    }
+
+    .theme-switcher button.active-theme {
+      background: linear-gradient(135deg, #ff5fa1, #4b9dff);
+      color: #0b1020;
+      opacity: 1;
+    }
+
+    /* Particles + glow */
+    .particles-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .center-glow {
+      position: fixed;
+      left: 50%;
+      top: 45%;
+      width: 28vw;
+      max-width: 360px;
+      aspect-ratio: 1 / 1;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255,75,139,0.16), rgba(255,75,139,0.0) 70%);
+      filter: blur(18px);
+      z-index: 0;
+    }
+
+    .top-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 50% 6%, rgba(255,255,255,0.10), transparent 40%),
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.0) 26%);
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.55);
+      box-shadow: 0 0 12px rgba(255,255,255,0.45);
+      opacity: 0.85;
+      animation: floatStar linear infinite;
+    }
+
+    @keyframes floatStar {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.85;
+      }
+      90% {
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-90vh) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* Status shimmer pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f9fbff;
+      font-size: 11px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+    }
+
+    .status-pill::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-120%);
+      animation: shimmer 3.5s ease-in-out infinite;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.8);
+      flex-shrink: 0;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-120%);
+      }
+      50% {
+        transform: translateX(120%);
+      }
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    @media (max-width: 960px) {
+      header.site-header {
+        flex-wrap: wrap;
+        justify-content: center;
+        border-radius: 18px;
+      }
+      nav.main-nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .user-spot {
+        display: none;
+      }
+      section.hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-right {
+        order: -1;
+      }
+      .media-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .plans-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: 18px 14px 60px;
+      }
+      header.site-header {
+        padding-inline: 14px;
+      }
+      .hero-sub {
+        max-width: none;
+      }
+      .media-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .plans-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .screen-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .mini-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* Search Styles */
+    .search-container {
+      position: relative;
+      flex: 1;
+      max-width: 300px;
+      margin: 0 12px;
+    }
+
+    .global-search-input {
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(7, 9, 20, 0.85);
+      color: var(--text-main);
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .global-search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(10, 12, 25, 0.95);
+      box-shadow: 0 0 0 3px rgba(255, 75, 139, 0.1);
+    }
+
+    .global-search-input::placeholder {
+      color: var(--text-soft);
+      opacity: 0.6;
+    }
+
+    .search-results-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: rgba(10, 15, 40, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(22px);
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 100;
+      padding: 12px;
+    }
+
+    .search-result-item {
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-bottom: 4px;
+    }
+
+    .search-result-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .search-result-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .search-result-meta {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .search-result-type {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(255, 75, 139, 0.15);
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    .search-intent-message {
+      padding: 12px;
+      font-size: 12px;
+      color: var(--text-soft);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 8px;
+    }
+
+    .search-see-all {
+      padding: 10px 12px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--accent);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .search-see-all:hover {
+      color: var(--accent-2);
+    }
+
+    /* Theme-aligned error and messages (Please, errors) */
+    .theme-error-message {
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.6;
+      background: rgba(8, 11, 26, 0.6);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      margin: 0 10px;
+    }
+
+    .theme-error-message p {
+      color: var(--text-main);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .theme-error-message ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .theme-error-message li {
+      margin-top: 8px;
+      padding-left: 0;
+    }
+
+    .theme-error-message li::before {
+      content: "• ";
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    .theme-loading-message {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--text-soft);
+      padding: 48px 24px;
+      font-size: 14px;
+    }
+
+    .ai-response {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(8, 11, 26, 0.85);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .ai-response p {
+      margin: 0 0 10px 0;
+      color: var(--text-soft);
+    }
+
+    .ai-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 960px) {
+      .search-container {
+        order: 2;
+        max-width: 100%;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Soft particles + center glow overlay -->
+  <div class="particles-layer" aria-hidden="true"></div>
+  <div class="center-glow" aria-hidden="true"></div>
+  <div class="top-glow" aria-hidden="true"></div>
+  <div class="page-transition-overlay" id="page-transition-overlay"></div>
+  <audio id="card-hover-sound" src="sounds/hover.mp3" preload="auto"></audio>
+
+  <div class="shell">
+  <header class="site-header">
+      <a href="/" class="logo" aria-label="HalfMovies – Home">
+        <img src="favicon.svg" alt="" class="logo-icon" width="32" height="32" />
+        <span class="logo-wordmark">HalfMovies</span>
+      </a>
+      <nav class="main-nav">
+        <a href="#browse" class="active"><span>Browse</span></a>
+        <a href="#worlds"><span>Worlds</span></a>
+        <a href="#plans"><span>Plans</span></a>
+        <a href="#contact"><span>Contact</span></a>
+        <a href="admin.html"><span>Admin</span></a>
+        <a href="signup.html"><span>Sign up</span></a>
+        <a href="login.html"><span>Log in</span></a>
+      </nav>
+      <div class="search-container">
+        <input 
+          type="text" 
+          id="global-search-input" 
+          class="global-search-input" 
+          placeholder="Search movies, worlds, or try 'quietcity'..."
+          autocomplete="off"
+        />
+        <div id="search-results-dropdown" class="search-results-dropdown" style="display: none;"></div>
+      </div>
+      <button id="ai-mode-toggle" class="ai-mode-toggle" onclick="toggleAIMode()">AI Mode: Off</button>
+      <div class="user-spot" id="user-spot">
+        <div class="tag-pill">
+          <div class="tag-pill-dot"></div>
+          <span>Early Access Build</span>
+        </div>
+        <div id="auth-guest">
+          <a href="signup.html" style="margin-right: 10px;">Sign up</a>
+          <a href="login.html">Log in</a>
+        </div>
+        <div id="auth-user" style="display: none;">
+          <div class="user-label">Signed in as</div>
+          <div class="user-email" id="user-email">—</div>
+          <button type="button" id="auth-logout" style="margin-left: 8px; padding: 4px 10px; font-size: 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: var(--text-soft); cursor: pointer;">Log out</button>
+        </div>
+    </div>
+  </header>
+
+  <main>
+      <section class="hero">
+        <div class="hero-left">
+          <div class="hero-kicker">
+            <div class="hero-kicker-badge">Preview</div>
+            <span>HalfMovies • Worlds of Cinema</span>
+          </div>
+          <h1 class="hero-title">
+            A quiet, cinematic home<br />
+            for people who still watch
+            <span class="accent">on purpose.</span>
+          </h1>
+          <p class="hero-sub">
+            HalfMovies is not a noisy store full of thumbnails. It is a curated
+            room of worlds. Fewer titles, deeper love. Every movie is chosen;
+            every series is there for a reason.
+          </p>
+          <div class="hero-meta-row">
+            <div class="meta-chip">
+              <div class="meta-dot"></div>
+              4K • Dolby Atmos • Ad-free playback
+          </div>
+            <div class="meta-chip">
+              <div class="meta-dot"></div>
+              Human curation, not endless scrolling
+        </div>
+                </div>
+          <div class="hero-cta-row">
+            <button class="btn-primary">
+              <span class="dot"></span>
+              Start a private screening
+            </button>
+            <button class="btn-ghost">
+              <span class="btn-ghost-icon">?</span>
+              How does HalfMovies work?
+            </button>
+              </div>
+          <div class="hero-note">
+            No noisy countdowns. No autoplay trailers. Just <span>films worth
+            your time.</span>
+              </div>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <span>Platform in active development</span>
+                </div>
+                </div>
+
+        <div class="hero-right">
+          <div class="screen-frame">
+            <div class="screen-header">
+              <div class="screen-dots">
+                <div class="screen-dot"></div>
+                <div class="screen-dot"></div>
+                <div class="screen-dot"></div>
+              </div>
+              <div class="screen-tabs">
+                <span class="active">Now Playing</span>
+                <span>Watchlist</span>
+            </div>
+        </div>
+            <div class="screen-main">
+              <div class="hero-poster-main">
+                <div class="hero-poster-tagline">
+                  One ticket. Endless nights.
+      </div>
+                <div>
+                  <div class="hero-poster-label">Tonight in HalfMovies</div>
+                  <div class="hero-poster-title">THE QUIET CITY ABOVE THE RAIN</div>
+                  <div class="hero-poster-meta">
+                    Original HalfMovies selection • 2h 12m • Drama / Sci-Fi
+        </div>
+                  <div class="hero-poster-chip-row">
+                    <div class="hero-poster-chip">Subtle sci-fi</div>
+                    <div class="hero-poster-chip">Slow burn</div>
+                    <div class="hero-poster-chip">Award-season favourite</div>
+        </div>
+                  <button class="hero-poster-btn">
+                    <span class="icon">▶</span>
+                    Start from the beginning
+                  </button>
+        </div>
+        </div>
+              <div class="screen-side">
+                <div>
+                  <div class="mini-row-title">In your orbit</div>
+                  <div class="mini-row">
+                    <div class="mini-card">
+                      <div class="mini-badge">Film</div>
+                      <span class="label">Last Train Over Water</span>
+                      <span class="sub">Romance • 1h 48m</span>
+      </div>
+                    <div class="mini-card">
+                      <div class="mini-badge">Series</div>
+                      <span class="label">Static Between Stars</span>
+                      <span class="sub">Season 1 • 8 episodes</span>
+        </div>
+                    <div class="mini-card">
+                      <div class="mini-badge">Film</div>
+                      <span class="label">The Room With No Doors</span>
+                      <span class="sub">Mystery • 2h 05m</span>
+              </div>
+              </div>
+              </div>
+                <div>
+                  <div class="mini-row-title">Your HalfList</div>
+                  <div class="mini-row">
+                    <div class="mini-card">
+                      <span class="label">Blue Harbour Nights</span>
+                      <span class="sub">Rewatch</span>
+            </div>
+                    <div class="mini-card">
+                      <span class="label">Children of the Fog</span>
+                      <span class="sub">Unseen</span>
+              </div>
+                    <div class="mini-card">
+                      <span class="label">Letters from Orbit</span>
+                      <span class="sub">Continue at 42:03</span>
+              </div>
+              </div>
+            </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+      <section id="browse">
+        <div class="section-head">
+          <div>
+          <div class="section-kicker">Browse</div>
+            <div class="section-title">Worlds you can walk into tonight.</div>
+            <div class="section-sub">
+              A small, changing catalogue of films and series chosen by hand –
+              not by a slot machine.
+        </div>
+              </div>
+          <div>
+            <div class="pill-filter-row" id="browse-filter-row">
+              <div class="pill-filter active" data-browse-filter="all">All</div>
+              <div class="pill-filter" data-browse-filter="favorites">My List</div>
+            </div>
+            <select id="browse-sort" class="browse-sort-select" aria-label="Sort">
+              <option value="year-desc">Newest first</option>
+              <option value="year-asc">Oldest first</option>
+              <option value="title">A–Z</option>
+            </select>
+            <div class="theme-switcher">
+              <span>AI Theme</span>
+              <button data-theme-btn="dark" onclick="setThemeFromButton('dark')">Dark</button>
+              <button data-theme-btn="night" onclick="setThemeFromButton('night')">Night</button>
+              <button data-theme-btn="ultra" onclick="setThemeFromButton('ultra')">Ultra</button>
+              </div>
+            </div>
+              </div>
+
+        <div class="media-grid" id="browse-grid" data-theme="ultra">
+          <p class="theme-loading-message">Loading movies…</p>
+        </div>
+      </section>
+
+      <section id="worlds">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Worlds</div>
+            <div class="section-title">HalfMovies is built like rooms, not shelves.</div>
+            <div class="section-sub">
+              You don’t scroll forever. You choose a room: calm, neon, storm,
+              morning – and we show you a few, carefully chosen works.
+            </div>
+              </div>
+            </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <div class="plan-pill">
+              <span class="dot"></span>
+              Room: Night Windows
+              </div>
+            <div class="plan-name">Quiet city stories</div>
+            <div class="plan-note">
+              Neon, rain, people who think too much, long silent walks and soft music
+              through thin apartment walls.
+            </div>
+            <ul class="plan-list">
+              <li>Films mostly between 90–130 minutes</li>
+              <li>Low dialogue, high mood</li>
+              <li>Perfect after late shifts and long drives</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-pill">
+              <span class="dot"></span>
+              Room: Morning Tables
+              </div>
+            <div class="plan-name">Light, hopeful, not stupid</div>
+            <div class="plan-note">
+              Stories that do not insult your brain but still let you breathe.
+              For coffee, laundry, first day off in a month.
+            </div>
+            <ul class="plan-list">
+              <li>Gentle comedy and warm drama</li>
+              <li>Series with short episodes</li>
+              <li>Subtle endings, not forced twists</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-pill">
+              <span class="dot"></span>
+              Room: Deep Space Small Rooms
+        </div>
+            <div class="plan-name">Sci-fi without explosions</div>
+            <div class="plan-note">
+              One apartment, one ship, one station, ten big questions. The kind of
+              science fiction that stays in your head for weeks.
+        </div>
+            <ul class="plan-list">
+              <li>Limited locations, big ideas</li>
+              <li>Anthology nights and curated marathons</li>
+              <li>Perfect for people who pause to think</li>
+            </ul>
+          </article>
+      </div>
+    </section>
+
+      <section id="plans">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Plans</div>
+            <div class="section-title">Simple, honest prices. No tricks.</div>
+            <div class="section-sub">
+              You can change or cancel any time. No contracts, no surprise fees,
+              no “only if you call this secret phone number”.
+        </div>
+              </div>
+              </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <div class="plan-pill">
+              <span class="dot"></span>
+              Starter
+            </div>
+            <div class="plan-price">$6 <span>/ month</span></div>
+            <div class="plan-note">
+              For people who only get a few quiet nights, but want them to matter.
+              </div>
+            <ul class="plan-list">
+              <li>1 screen at a time</li>
+              <li>1080p HD</li>
+              <li>Access to all “Night Windows” and “Morning Tables” rooms</li>
+            </ul>
+            <div class="plan-cta-row">
+              <button class="plan-btn">Start with Starter</button>
+              <span>Switch anytime</span>
+            </div>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-featured">Most chosen</div>
+            <div class="plan-pill">
+              <span class="dot"></span>
+              HalfMovies Core
+              </div>
+            <div class="plan-price">$12 <span>/ month</span></div>
+            <div class="plan-note">
+              For people who want a small cinema that lives inside their screen.
+              </div>
+            <ul class="plan-list">
+              <li>2 screens at the same time</li>
+              <li>4K where available</li>
+              <li>All Rooms + HalfMovies Originals</li>
+              <li>Priority access to new selections</li>
+            </ul>
+            <div class="plan-cta-row">
+              <button class="plan-btn">Begin your Core month</button>
+              <span>Pause in one click</span>
+            </div>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-pill">
+              <span class="dot"></span>
+              Studio / Family
+              </div>
+            <div class="plan-price">$24 <span>/ month</span></div>
+            <div class="plan-note">
+              For homes full of people or small studios who use HalfMovies as a
+              reference shelf.
+              </div>
+            <ul class="plan-list">
+              <li>Up to 5 profiles</li>
+              <li>Offline downloads on supported devices</li>
+              <li>Private “Studio Shelf” for saved titles</li>
+            </ul>
+            <div class="plan-cta-row">
+              <button class="plan-btn">Talk to us</button>
+              <span>Custom setups welcome</span>
+            </div>
+          </article>
+      </div>
+    </section>
+
+      <!-- PLANS GLOW SECTION -->
+      <section class="plans-container" data-theme="ultra">
+      <div class="container">
+          <h2 class="plans-title">Choose Your Plan</h2>
+          <div class="plans-grid">
+            <article class="plan-card card-theme free">
+              <h3>AI Explorer</h3>
+              <p class="price">$0 / month</p>
+              <ul class="features">
+                <li>Unlimited watching</li>
+                <li>720p quality</li>
+                <li>Ads enabled</li>
+                <li>Access to standard library</li>
+                <li>No downloads</li>
+                <li>1 profile</li>
+              </ul>
+              <button class="plan-btn">Get Started</button>
+          </article>
+
+            <article class="plan-card card-theme plus">
+              <h3>AI Creator</h3>
+              <p class="price">$7.99 / month</p>
+              <ul class="features">
+                <li>Unlimited watching</li>
+                <li>1080p HD</li>
+                <li>Light ads</li>
+                <li>Access to extended library</li>
+                <li>Secure downloads (5 videos)</li>
+                <li>2 profiles</li>
+              </ul>
+              <button class="plan-btn">Upgrade</button>
+          </article>
+
+            <article class="plan-card card-theme studio">
+              <h3>AI Visionary</h3>
+              <p class="price">$14.99 / month</p>
+              <ul class="features">
+                <li>Unlimited watching</li>
+                <li>4K + HDR</li>
+                <li>No ads at all</li>
+                <li>Full library access</li>
+                <li>Unlimited secure downloads</li>
+                <li>Up to 5 profiles</li>
+                <li>Exclusive early releases</li>
+              </ul>
+              <button class="plan-btn highlight">Go Premium</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+      <div class="ai-assistant-bubble" onclick="toggleAIAssistant()">
+        <div class="ai-assistant-icon">AI</div>
+        </div>
+
+      <div class="ai-assistant-panel" id="ai-assistant-panel">
+        <div class="ai-assistant-header">
+          <span>HalfMovies AI</span>
+          <button type="button" onclick="toggleAIAssistant()">×</button>
+            </div>
+        <div class="ai-assistant-body">
+          <p class="ai-ai-intro">
+            This is where HalfMovies AI will live.
+            It can suggest films, change the theme, and help you design your perfect watch room.
+          </p>
+          <div class="ai-suggestions">
+            <button type="button" onclick="applyCardTheme('night')">Set mood to Night</button>
+            <button type="button" onclick="applyCardTheme('ultra')">Neon Ultra Glow</button>
+            <button type="button" onclick="window.suggestCalmMovies && window.suggestCalmMovies()">Suggest 3 calm movies</button>
+            </div>
+          <div class="ai-input-row">
+            <input type="text" id="ai-query-input" placeholder="Ask HalfMovies AI..." />
+            <button type="button" onclick="window.sendAIMessage && window.sendAIMessage()">Send</button>
+          </div>
+            </div>
+          </div>
+
+      <section id="contact">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Contact</div>
+            <div class="section-title">Talk directly to the person who built it.</div>
+            <div class="section-sub">
+              No big anonymous company here. One person caring about films, screens
+              and people who work too hard but still love to watch something good.
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+              <p>
+              <strong>HalfMovies</strong> is a quiet, cinematic platform idea under
+              construction. If you are a studio, creator, or just a person who wants
+              to talk about the project:
+            </p>
+            <p>
+              <strong>Phone / WhatsApp:</strong>
+              <span class="contact-phone">+1 (909) 302-2440</span>
+            </p>
+            <p>
+              <strong>Email:</strong>
+              <span class="contact-email">abesannat@gmail.com</span>
+              </p>
+              <p class="contact-note">
+              You can reach out in Arabic or English. Long messages are welcome.
+              HalfMovies is still early – this is the right time to shape it together.
+              </p>
+              <div>
+              <div class="section-kicker" style="margin-bottom:6px;">Stay connected</div>
+                <p class="contact-note">
+                Social handles are placeholders for now, but the brand is ready:
+                HalfMovies can live on any screen.
+                </p>
+                <div class="social-row">
+                <div class="social-pill"><span>X</span><span>@HalfMovies</span></div>
+                <div class="social-pill"><span>IG</span><span>@halfmovies</span></div>
+                <div class="social-pill"><span>YT</span><span>HalfMovies</span></div>
+                </div>
+              </div>
+            </div>
+
+          <div class="contact-card">
+            <div class="contact-label">Send a note</div>
+            <p>
+              This form can later be wired to an API. For now it shows how the
+              conversation with HalfMovies might look inside the interface.
+            </p>
+            <div class="contact-row">
+              <input class="contact-input" type="text" placeholder="Your name" />
+              <input class="contact-input" type="email" placeholder="Email (optional)" />
+        </div>
+            <textarea class="contact-input" style="border-radius: 14px; resize: vertical; min-height: 70px;" placeholder="Tell me what you imagine HalfMovies could become on your screen..."></textarea>
+            <div style="margin-top: 8px; display:flex; justify-content: space-between; align-items:center; gap:8px;">
+              <button class="contact-button">Pretend to send</button>
+              <span class="contact-note">Real backend to be wired later.</span>
+              </div>
+              </div>
+          </div>
+
+        <div class="faq-grid" style="margin-top:18px;">
+          <div class="faq-card">
+            <strong>Is HalfMovies a real service right now?</strong>
+            Not yet. This is a live, working concept page built to test ideas,
+            design language, and how it feels to browse something calmer than
+            current platforms.
+                </div>
+          <div class="faq-card">
+            <strong>Can I use this design as a partner or investor deck?</strong>
+            Yes. This page is made to be shown. Open it on a big screen, walk
+            through the sections, and imagine the catalogue wired behind it.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <div class="footer-inner">
+      <div>
+          <div class="footer-logo">HalfMovies</div>
+          <div>© 2025 HalfMovies. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+      </div>
+    </div>
+  </footer>
+  </div>
+</body>
+  <script>
+    // Prevent scroll restoration and scroll to top on page load
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    
+    // Scroll to top on page load
+    window.addEventListener('load', () => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+    
+    // Scroll to top on hash change
+    window.addEventListener('hashchange', () => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+    
+  // Attach real poster URLs from data-poster attribute
+  document.querySelectorAll('.media-card').forEach(card => {
+    const url = card.getAttribute('data-poster');
+    const posterDiv = card.querySelector('.media-poster');
+    if (!url || !posterDiv) return;
+
+    posterDiv.style.backgroundImage = `url('${url}')`;
+    posterDiv.style.backgroundSize = 'cover';
+    posterDiv.style.backgroundPosition = 'center';
+  });
+
+  // Soft star particles
+    (function () {
+    const layer = document.querySelector('.particles-layer');
+    if (!layer) return;
+
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 2 + Math.random() * 3;
+      p.style.width = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.bottom = `${Math.random() * 90}%`;
+      p.style.animationDuration = `${10 + Math.random() * 12}s`;
+      p.style.animationDelay = `${Math.random() * 8}s`;
+      p.style.opacity = `${0.5 + Math.random() * 0.4}`;
+      layer.appendChild(p);
+    }
+    })();
+
+  // User override flag
+  let userOverrodeTheme = false;
+
+  // Dynamic browse grid from API
+    (function () {
+    async function loadMovies() {
+      try {
+        // Add aggressive cache-busting to force fresh data
+        const cacheBuster = `?v=${Date.now()}&_=${Math.random().toString(36).substr(2, 9)}`;
+        let res = await fetch(`/api/movies${cacheBuster}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache'
+          }
+        });
+        if (!res.ok) {
+          // Try multiple paths for movies.json with cache-busting
+          const paths = ["movies.json", "./movies.json", "/movies.json"];
+          for (const path of paths) {
+            try {
+              res = await fetch(`${path}${cacheBuster}`, {
+                cache: 'no-store',
+                headers: {
+                  'Cache-Control': 'no-cache, no-store, must-revalidate',
+                  'Pragma': 'no-cache'
+                }
+              });
+              if (res.ok) break;
+            } catch (e) {
+              console.warn(`Failed to load from ${path}:`, e);
+            }
+          }
+        }
+        if (!res.ok) {
+          console.error("Failed to load movies from API or movies.json");
+          document.getElementById("browse-grid").innerHTML = 
+            '<div class="theme-error-message">' +
+            '<p>Unable to load movies. Please check:</p>' +
+            '<ul>' +
+            '<li>1. movies.json is in the same folder as index.html</li>' +
+            '<li>2. File is named exactly "movies.json"</li>' +
+            '<li>3. Check browser console (F12) for errors</li>' +
+            '</ul></div>';
+          return;
+        }
+        let movies = await res.json();
+        if (!Array.isArray(movies)) {
+          movies = movies && Array.isArray(movies.movies) ? movies.movies : [];
+        }
+        
+        // Debug: Log total movies loaded
+        console.log(`✅ Loaded ${movies.length} movies from ${res.url || 'movies.json'}`);
+        
+        // Load YouTube feeds and merge with existing movies
+        try {
+          console.log('📺 Loading YouTube feeds from feeds.valid.json...');
+          if (typeof window.loadYouTubeFeeds === 'function') {
+            const youtubeVideos = await window.loadYouTubeFeeds();
+            if (youtubeVideos && youtubeVideos.length > 0) {
+              console.log(`✅ Merging ${youtubeVideos.length} YouTube videos with ${movies.length} existing movies`);
+              // Merge: existing movies first, then YouTube videos
+              movies = [...movies, ...youtubeVideos];
+              console.log(`✅ Total movies after merge: ${movies.length}`);
+            } else {
+              console.log('ℹ️ No YouTube videos loaded (feeds may be empty or failed)');
+            }
+          } else {
+            console.warn('⚠️ loadYouTubeFeeds function not available (youtube-feeds-loader.js not loaded)');
+          }
+        } catch (feedError) {
+          console.warn('⚠️ Failed to load YouTube feeds (continuing with existing movies):', feedError);
+        }
+        
+        // Fix encoding issues on the fly (Hostinger editor corruption)
+        movies = movies.map(movie => {
+          if (movie.description) {
+            movie.description = movie.description
+              .replace(/â€"/g, '-')
+              .replace(/â€"/g, '-')
+              .replace(/â€"/g, '-');
+          }
+          if (movie.director) {
+            movie.director = movie.director
+              .replace(/LÃ©onetti/g, 'Leonetti')
+              .replace(/Léonetti/g, 'Leonetti');
+          }
+          if (movie.cast && Array.isArray(movie.cast)) {
+            movie.cast = movie.cast.map(name => 
+              name.replace(/fiancÃ©e/g, 'fiancee')
+                  .replace(/fiancée/g, 'fiancee')
+            );
+          }
+          if (movie.description) {
+            movie.description = movie.description
+              .replace(/fiancÃ©e/g, 'fiancee')
+              .replace(/fiancée/g, 'fiancee');
+          }
+          return movie;
+        });
+
+        const grid = document.getElementById("browse-grid");
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        // Filter: Only show movies with YouTube links AND exclude deleted movies
+        const deletedTitles = [
+          'Inside the Mind of a Killer',
+          'The Universe Documentary',
+          'Ancient Civilizations Documentary'
+        ];
+        
+        const moviesWithYouTube = movies.filter(movie => {
+          // Exclude deleted movies
+          if (deletedTitles.includes(movie.title)) {
+            console.warn(`⚠️ Filtered out deleted movie: ${movie.title}`);
+            return false;
+          }
+          
+          // Include movies with YouTube links OR movies that need YouTube links (show them)
+          const videoUrl = movie.hlsUrl || movie.url || (movie.source && movie.source.url) || "";
+          const hasYouTube = videoUrl && typeof videoUrl === 'string' && (
+            videoUrl.includes("youtube.com/embed") ||
+            videoUrl.includes("youtube.com/watch") ||
+            videoUrl.includes("youtu.be/")
+          );
+          
+          // Show movies with YouTube OR movies that need YouTube links (from JustWatch) OR any movie with a poster/title (show all)
+          return hasYouTube || movie.needsYouTubeLink === true || !!(movie.posterUrl || movie.thumbnailUrl || movie.title);
+        });
+
+        // Debug: Log movies being displayed
+        console.log(`🎬 Total movies loaded: ${movies.length}`);
+        console.log(`🎬 Movies with YouTube: ${moviesWithYouTube.length}`);
+        console.log(`🎬 Displaying ${moviesWithYouTube.length} movies in grid`);
+        
+        // Check for bad movies
+        const badTitles = ['Inside the Mind of a Killer', 'The Universe Documentary', 'Ancient Civilizations Documentary'];
+        const foundBad = moviesWithYouTube.filter(m => badTitles.includes(m.title));
+        if (foundBad.length > 0) {
+          console.error(`❌ Found ${foundBad.length} bad movies that should be deleted:`, foundBad.map(m => m.title));
+        } else {
+          console.log(`✅ No bad movies found in filtered list`);
+        }
+
+        const PAGE_SIZE = 48;
+        window.__browseMovies = moviesWithYouTube;
+        window.__browseGenre = null;
+        window.__browseFavoritesOnly = false;
+        window.__browseSort = document.getElementById("browse-sort") ? document.getElementById("browse-sort").value : "year-desc";
+
+        function getFavorites() {
+          try {
+            const raw = localStorage.getItem("hm_favorites");
+            if (!raw) return [];
+            const arr = JSON.parse(raw);
+            return Array.isArray(arr) ? arr : [];
+          } catch (e) { return []; }
+        }
+
+        function setFavorites(ids) {
+          localStorage.setItem("hm_favorites", JSON.stringify(ids));
+        }
+
+        function getPosterUrls(movie) {
+          let posterUrl = "";
+          let fallbackUrl = null;
+          if (movie.id && movie.posterUrl && movie.posterUrl.includes("posters/")) {
+            posterUrl = movie.posterUrl;
+            if (posterUrl.endsWith(".jpg")) fallbackUrl = posterUrl.replace(".jpg", ".png");
+          } else if (movie.posterUrl && !movie.posterUrl.includes("placehold")) {
+            posterUrl = movie.posterUrl;
+          } else if (movie.thumbnailUrl && !movie.thumbnailUrl.includes("placehold")) {
+            posterUrl = movie.thumbnailUrl;
+          }
+          if (!posterUrl) {
+            let videoId = "";
+            const videoUrl = movie.hlsUrl || movie.url || "";
+            if (videoUrl && typeof videoUrl === "string") {
+              if (videoUrl.includes("embed/")) videoId = videoUrl.split("embed/")[1].split("?")[0].split("&")[0];
+              else if (videoUrl.includes("watch?v=")) videoId = videoUrl.split("watch?v=")[1].split("&")[0].split("#")[0];
+              else if (videoUrl.includes("youtu.be/")) videoId = videoUrl.split("youtu.be/")[1].split("?")[0].split("&")[0];
+            }
+            if (videoId && videoId.length === 11) {
+              posterUrl = "https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+              fallbackUrl = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
+            }
+          }
+          if (!posterUrl && movie.needsYouTubeLink) {
+            posterUrl = movie.posterUrl || movie.thumbnailUrl || "https://placehold.co/300x450/0f172a/ffffff?text=" + encodeURIComponent((movie.title || "").substring(0, 20));
+          }
+          if (!posterUrl) {
+            posterUrl = movie.posterUrl || movie.thumbnailUrl || "https://placehold.co/300x450/0f172a/a6b0d8?text=" + encodeURIComponent((movie.title || "Film").substring(0, 25));
+          }
+          const onerrorAttr = fallbackUrl
+            ? "if(this.src.includes('maxresdefault')&&this.src!=='" + fallbackUrl.replace(/'/g, "\\'") + "'){this.src='" + fallbackUrl.replace(/'/g, "\\'") + "';}else{var c=this.closest('.media-card');if(c)c.style.display='none';}"
+            : "var c=this.closest('.media-card');if(c)c.style.display='none';";
+          return { posterUrl, fallbackUrl, onerrorAttr };
+        }
+
+        function getBrowseList() {
+          let list = window.__browseMovies || [];
+          const favs = getFavorites();
+          if (window.__browseFavoritesOnly) list = list.filter(m => favs.includes(m.id));
+          if (window.__browseGenre) list = list.filter(m => Array.isArray(m.genres) && m.genres.includes(window.__browseGenre));
+          const sort = window.__browseSort || "year-desc";
+          if (sort === "year-desc") list = list.slice().sort((a, b) => (b.year || 0) - (a.year || 0));
+          else if (sort === "year-asc") list = list.slice().sort((a, b) => (a.year || 0) - (b.year || 0));
+          else if (sort === "title") list = list.slice().sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+          return list;
+        }
+
+        function buildGenrePills() {
+          const row = document.getElementById("browse-filter-row");
+          if (!row) return;
+          const genres = new Set();
+          (window.__browseMovies || []).forEach(m => (m.genres || []).forEach(g => genres.add(g)));
+          const sorted = Array.from(genres).filter(Boolean).sort();
+          const allPill = row.querySelector('[data-browse-filter="all"]');
+          const favPill = row.querySelector('[data-browse-filter="favorites"]');
+          row.innerHTML = "";
+          if (allPill) row.appendChild(allPill);
+          sorted.forEach(genre => {
+            const p = document.createElement("div");
+            p.className = "pill-filter";
+            p.setAttribute("data-browse-filter", "genre");
+            p.setAttribute("data-genre", genre);
+            p.textContent = genre;
+            row.appendChild(p);
+          });
+          if (favPill) row.appendChild(favPill);
+          row.querySelectorAll(".pill-filter").forEach(pill => {
+            pill.addEventListener("click", function () {
+              row.querySelectorAll(".pill-filter").forEach(p => p.classList.remove("active"));
+              this.classList.add("active");
+              if (this.getAttribute("data-browse-filter") === "favorites") {
+                window.__browseGenre = null;
+                window.__browseFavoritesOnly = true;
+              } else if (this.getAttribute("data-browse-filter") === "all") {
+                window.__browseGenre = null;
+                window.__browseFavoritesOnly = false;
+              } else {
+                window.__browseGenre = this.getAttribute("data-genre") || null;
+                window.__browseFavoritesOnly = false;
+              }
+              renderBrowseChunk(0, false);
+            });
+          });
+        }
+
+        function renderBrowseChunk(fromIndex, append) {
+          const list = getBrowseList();
+          const chunk = list.slice(fromIndex, fromIndex + PAGE_SIZE);
+          if (!append) {
+            grid.innerHTML = "";
+          }
+          // Remove any existing Load more row from the grid (from previous chunk)
+          const existingLoadMore = grid.querySelector(".load-more-wrap");
+          if (existingLoadMore) existingLoadMore.remove();
+          const favs = getFavorites();
+          chunk.forEach(movie => {
+            const { posterUrl, onerrorAttr } = getPosterUrls(movie);
+            const inFav = favs.includes(movie.id);
+            const card = document.createElement("a");
+            card.href = "movie.html?id=" + encodeURIComponent(movie.id);
+            card.className = "media-card card-theme";
+            card.setAttribute("data-movie-id", movie.id);
+            card.innerHTML =
+              '<div class="media-poster" style="overflow: hidden; position: relative;">' +
+              '<span class="browse-fav-icon' + (inFav ? " in-favorites" : "") + '" data-movie-id="' + (movie.id || "").replace(/"/g, "&quot;") + '" aria-label="Add to list">♥</span>' +
+              '<img src="' + (posterUrl || "").replace(/"/g, "&quot;") + '" alt="' + (movie.title || "").replace(/"/g, "&quot;") + '" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 0;" onerror="' + (onerrorAttr || "").replace(/"/g, "&quot;") + '" />' +
+              '<div class="media-tag" style="z-index: 2; position: relative;">' + (movie.is_original ? "HalfMovies Original" : "Film") + "</div>" +
+              "</div>" +
+              '<div class="media-body">' +
+              '<div class="media-title">' + (movie.title || "Untitled").replace(/</g, "&lt;") + "</div>" +
+              '<div class="media-meta"><span>' + (movie.year || "") + "</span><span>" + ((movie.genres || []).slice(0, 2).join(" • ")) + "</span></div>" +
+              '<div class="media-foot"><div class="media-pill">' + (movie.logline || "Watch now").replace(/</g, "&lt;") + '</div><div class="media-play"><span class="icon">▶</span> Play</div></div>' +
+              "</div>";
+            grid.appendChild(card);
+            const heart = card.querySelector(".browse-fav-icon");
+            if (heart) {
+              heart.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const id = this.getAttribute("data-movie-id");
+                if (!id) return;
+                let f = getFavorites();
+                if (f.includes(id)) f = f.filter(x => x !== id);
+                else f = f.concat(id);
+                setFavorites(f);
+                this.classList.toggle("in-favorites", f.includes(id));
+              });
+            }
+          });
+          const moreCount = list.length - (fromIndex + chunk.length);
+          if (moreCount > 0) {
+            const loadMoreWrap = document.createElement("div");
+            loadMoreWrap.className = "load-more-wrap";
+            const moreLabel = moreCount >= 999 ? "Load more" : "Load more (" + moreCount + " more)";
+            loadMoreWrap.innerHTML = '<button type="button" class="load-more-btn" id="browse-load-more-btn">' + moreLabel + "</button>";
+            grid.appendChild(loadMoreWrap);
+            const btn = loadMoreWrap.querySelector("#browse-load-more-btn, .load-more-btn");
+            if (btn) btn.onclick = function () { renderBrowseChunk(fromIndex + PAGE_SIZE, true); };
+          }
+        }
+
+        const sortEl = document.getElementById("browse-sort");
+        if (sortEl) {
+          sortEl.style.display = "inline-block";
+          sortEl.value = window.__browseSort;
+          sortEl.addEventListener("change", function () {
+            window.__browseSort = this.value;
+            renderBrowseChunk(0, false);
+          });
+        }
+        buildGenrePills();
+        renderBrowseChunk(0, false);
+        autoThemeByMood(moviesWithYouTube);
+      } catch (e) {
+        console.error("Failed to load movies", e);
+        const grid = document.getElementById("browse-grid");
+        if (grid) {
+          grid.innerHTML = '<div class="theme-error-message">' +
+            '<p>Could not load movies.</p>' +
+            '<ul><li>' + (e && e.message ? e.message : 'Unknown error') + '</li>' +
+            '<li>Make sure the server is running (e.g. <strong>http://localhost:1636</strong>)</li>' +
+            '<li>Open browser console (F12) for details</li></ul></div>';
+        }
+      }
+    }
+
+    function autoThemeByMood(movies) {
+      if (userOverrodeTheme) return;
+      if (document.documentElement.classList.contains("ai-mode-on")) return;
+      if (!Array.isArray(movies) || movies.length === 0) return;
+
+      const moodScore = { dark: 0, night: 0, ultra: 0 };
+
+      movies.forEach(movie => {
+        const genres = (movie.genres || []).map(g => String(g).toLowerCase());
+
+        if (genres.some(g => g.includes("horror") || g.includes("thriller") || g.includes("noir"))) {
+          moodScore.night += 2;
+        }
+        if (genres.some(g => g.includes("sci-fi") || g.includes("cyberpunk") || g.includes("neon"))) {
+          moodScore.ultra += 2;
+        }
+        if (genres.some(g => g.includes("drama") || g.includes("romance") || g.includes("family"))) {
+          moodScore.dark += 1;
+        }
+      });
+
+      let chosen = "ultra";
+      let max = -Infinity;
+      for (const key of ["dark", "night", "ultra"]) {
+        if (moodScore[key] > max) {
+          max = moodScore[key];
+          chosen = key;
+        }
+      }
+
+      if (max <= 0) return;
+
+      if (typeof applyCardTheme === "function") {
+        applyCardTheme(chosen);
+        if (typeof updateActiveThemeButton === "function") {
+          updateActiveThemeButton(chosen);
+        }
+      }
+    }
+
+    function runWhenReady(fn) {
+      if (document.readyState === 'loading') {
+        document.addEventListener("DOMContentLoaded", fn);
+      } else {
+        fn();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {});
+    runWhenReady(async () => {
+      if (typeof initCardTheme === 'function') initCardTheme();
+
+      // Update header: show Sign up/Log in or signed-in user
+      (function () {
+        const guestEl = document.getElementById("auth-guest");
+        const userEl = document.getElementById("auth-user");
+        const emailEl = document.getElementById("user-email");
+        const logoutBtn = document.getElementById("auth-logout");
+        if (!guestEl || !userEl) return;
+        fetch("/api/auth/me", { credentials: "include" })
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => {
+            if (data && data.user) {
+              guestEl.style.display = "none";
+              userEl.style.display = "flex";
+              userEl.style.alignItems = "center";
+              userEl.style.gap = "8px";
+              if (emailEl) emailEl.textContent = data.user.email || "—";
+              if (logoutBtn) {
+                logoutBtn.onclick = function () {
+                  fetch("/api/auth/logout", { method: "POST", credentials: "include" }).then(() => {
+                    guestEl.style.display = "";
+                    userEl.style.display = "none";
+                    window.location.reload();
+                  });
+                };
+              }
+            }
+          })
+          .catch(() => {});
+      })();
+      
+      // Ensure YouTube feeds loader is loaded before loading movies (optional)
+      if (typeof window.loadYouTubeFeeds !== 'function') {
+        await new Promise((resolve) => {
+          const script = document.createElement("script");
+          script.src = "youtube-feeds-loader.js";
+          script.onload = resolve;
+          script.onerror = resolve;
+          document.head.appendChild(script);
+        });
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+      loadMovies();
+    });
+    })();
+
+  // Card theme switcher (multi-section)
+    (function () {
+    const CARD_THEME_CLASSES = ["card-dark", "card-night", "card-ultra"];
+    const THEME_KEY = "hm_card_theme";
+
+    window.applyCardTheme = function applyCardTheme(theme, options = {}) {
+      const { fromUser = false } = options;
+
+      if (fromUser) {
+        userOverrodeTheme = true;
+      }
+
+      try { localStorage.setItem(THEME_KEY, theme); } catch (_) {}
+
+      document.querySelectorAll("[data-theme]").forEach(container => {
+        container.dataset.theme = theme;
+
+        const cards = container.querySelectorAll(".card-theme");
+        cards.forEach(card => {
+          CARD_THEME_CLASSES.forEach(cls => card.classList.remove(cls));
+          card.classList.add("card-" + theme);
+        });
+      });
+    };
+
+    window.updateActiveThemeButton = function updateActiveThemeButton(theme) {
+      document.querySelectorAll("[data-theme-btn]").forEach(btn => {
+        btn.classList.toggle("active-theme", btn.dataset.themeBtn === theme);
+      });
+    };
+
+    window.setThemeFromButton = function setThemeFromButton(theme) {
+      applyCardTheme(theme, { fromUser: true });
+      updateActiveThemeButton(theme);
+    };
+
+    window.initCardTheme = function initCardTheme() {
+      let saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch (_) {}
+      if (!saved) saved = "ultra";
+
+      applyCardTheme(saved);
+      userOverrodeTheme = true; // treat persisted theme as user preference
+      if (typeof updateActiveThemeButton === "function") {
+        updateActiveThemeButton(saved);
+      }
+    };
+    })();
+
+  // AI Mode toggle
+    (function () {
+    const AI_MODE_KEY = "hm_ai_mode";
+
+    window.updateAIModeButton = function updateAIModeButton(on) {
+      const btn = document.getElementById("ai-mode-toggle");
+      if (!btn) return;
+      btn.textContent = on ? "AI Mode: On" : "AI Mode: Off";
+    };
+
+    window.setAIMode = function setAIMode(on) {
+      document.documentElement.classList.toggle("ai-mode-on", on);
+      try { localStorage.setItem(AI_MODE_KEY, on ? "1" : "0"); } catch (_) {}
+
+      if (on) {
+        applyCardTheme("ultra");
+        updateActiveThemeButton?.("ultra");
+      } else {
+        let saved = null;
+        try { saved = localStorage.getItem("hm_card_theme"); } catch (_) {}
+        if (!saved) saved = "ultra";
+        applyCardTheme(saved);
+        updateActiveThemeButton?.(saved);
+      }
+      updateAIModeButton(on);
+    };
+
+    window.toggleAIMode = function toggleAIMode() {
+      const on = !document.documentElement.classList.contains("ai-mode-on");
+      setAIMode(on);
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const saved = (() => {
+        try { return localStorage.getItem(AI_MODE_KEY) === "1"; } catch (_) { return false; }
+      })();
+      setAIMode(saved);
+    });
+  })();
+
+  // Hover sound on media-card
+  (function () {
+    const audio = document.getElementById("card-hover-sound");
+    if (!audio) return;
+
+    let lastPlay = 0;
+    const MIN_INTERVAL = 200;
+
+    document.addEventListener("mouseover", e => {
+      const card = e.target.closest(".media-card");
+      if (!card) return;
+
+      const now = Date.now();
+      if (now - lastPlay < MIN_INTERVAL) return;
+      lastPlay = now;
+
+      try {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch (_) {}
+    });
+  })();
+
+  // Auto theme by time (simple heuristic)
+  (function () {
+    function autoThemeByTime() {
+      if (userOverrodeTheme) return;
+      if (document.documentElement.classList.contains("ai-mode-on")) return;
+      const hour = new Date().getHours();
+      let chosen = "ultra";
+      if (hour >= 0 && hour < 6) {
+        chosen = "night";   // late night
+      } else if (hour >= 6 && hour < 18) {
+        chosen = "dark";    // daytime
+      }
+      applyCardTheme(chosen);
+      const theme = (() => {
+        try { return localStorage.getItem("hm_card_theme"); } catch (_) { return null; }
+      })() || (document.querySelector("[data-theme]")?.dataset.theme) || chosen;
+      if (typeof updateActiveThemeButton === "function") {
+        updateActiveThemeButton(theme);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // initCardTheme already runs in the block above; keep this separate for clarity
+      autoThemeByTime();
+      });
+    })();
+
+  // Page transition on media-card click
+    (function () {
+    const overlay = document.getElementById("page-transition-overlay");
+    if (!overlay) return;
+
+    document.addEventListener("click", e => {
+      const link = e.target.closest(".media-card[href]");
+      if (!link) return;
+      e.preventDefault();
+      const url = link.href;
+      overlay.classList.add("active");
+      // Clear overlay after navigation
+      setTimeout(() => { 
+        overlay.classList.remove("active");
+        window.location.href = url; 
+      }, 300);
+      });
+    })();
+
+  // AI assistant toggle
+  window.toggleAIAssistant = function toggleAIAssistant() {
+    const panel = document.getElementById("ai-assistant-panel");
+    if (!panel) return;
+    panel.classList.toggle("open");
+  };
+
+  // ===== AI Assistant Functionality =====
+  (function() {
+    // Store movies globally for AI access
+    let allMovies = [];
+    
+    // Get movies from the browse grid or reload
+    async function getMovies() {
+      // First try to get from searchEngine (already loaded)
+      if (window.searchEngine?.moviesData && window.searchEngine.moviesData.length > 0) {
+        allMovies = window.searchEngine.moviesData;
+        return allMovies;
+      }
+      
+      // If we already have movies, return them
+      if (allMovies.length > 0) return allMovies;
+      
+      // Otherwise, load from API or JSON
+      try {
+        const cacheBuster = `?v=${Date.now()}`;
+        let res = await fetch(`/api/movies${cacheBuster}`);
+        if (!res.ok) {
+          res = await fetch(`movies.json${cacheBuster}`);
+        }
+        if (res.ok) {
+          allMovies = await res.json();
+        }
+      } catch (e) {
+        console.warn('AI: Could not load movies:', e);
+      }
+      return allMovies;
+    }
+
+    // Suggest movies by mood/genre
+    function suggestMoviesByMood(mood, count = 3) {
+      const moodMap = {
+        'calm': { genres: ['Drama', 'Romance', 'Documentary'], keywords: ['calm', 'peaceful', 'relaxing', 'quiet', 'slow'] },
+        'action': { genres: ['Action', 'Thriller', 'Adventure'], keywords: ['action', 'fast', 'exciting', 'thrilling'] },
+        'comedy': { genres: ['Comedy'], keywords: ['funny', 'comedy', 'humor', 'laugh'] },
+        'horror': { genres: ['Horror', 'Thriller'], keywords: ['horror', 'scary', 'frightening', 'suspense'] },
+        'romance': { genres: ['Romance', 'Drama'], keywords: ['romance', 'love', 'romantic', 'heart'] },
+        'sci-fi': { genres: ['Science Fiction', 'Sci-Fi'], keywords: ['sci-fi', 'future', 'space', 'technology'] }
+      };
+
+      const config = moodMap[mood.toLowerCase()] || moodMap['calm'];
+      const suggestions = [];
+      const used = new Set();
+
+      // First pass: match by genre
+      for (const movie of allMovies) {
+        if (suggestions.length >= count) break;
+        if (used.has(movie.id)) continue;
+        
+        const movieGenres = (movie.genres || []).map(g => g.toLowerCase());
+        const hasGenre = config.genres.some(g => 
+          movieGenres.some(mg => mg.includes(g.toLowerCase()) || g.toLowerCase().includes(mg))
+        );
+        
+        if (hasGenre) {
+          suggestions.push(movie);
+          used.add(movie.id);
+        }
+      }
+
+      // Second pass: match by keywords in title/description
+      if (suggestions.length < count) {
+        for (const movie of allMovies) {
+          if (suggestions.length >= count) break;
+          if (used.has(movie.id)) continue;
+          
+          const text = `${movie.title || ''} ${movie.description || ''}`.toLowerCase();
+          const hasKeyword = config.keywords.some(k => text.includes(k));
+          
+          if (hasKeyword) {
+            suggestions.push(movie);
+            used.add(movie.id);
+          }
+        }
+      }
+
+      // Fallback: random movies
+      while (suggestions.length < count && allMovies.length > 0) {
+        const random = allMovies[Math.floor(Math.random() * allMovies.length)];
+        if (!used.has(random.id)) {
+          suggestions.push(random);
+          used.add(random.id);
+        }
+      }
+
+      return suggestions.slice(0, count);
+    }
+
+    // Display AI response in the panel
+    function showAIResponse(message, movies = null) {
+      const body = document.querySelector('.ai-assistant-body');
+      if (!body) return;
+
+      // Remove old response if exists
+      const oldResponse = body.querySelector('.ai-response');
+      if (oldResponse) oldResponse.remove();
+
+      let html = `<div class="ai-response">`;
+      html += `<p style="margin: 0 0 10px 0; color: var(--text-main);">${message}</p>`;
+      
+      if (movies && movies.length > 0) {
+        html += `<div style="margin-top: 12px;">`;
+        movies.forEach(movie => {
+          const url = `movie.html?id=${encodeURIComponent(movie.id)}`;
+          html += `
+            <div onclick="window.location.href='${url}'; toggleAIAssistant();" 
+                 style="padding: 10px; margin: 8px 0; background: rgba(255,255,255,0.03); border-radius: 6px; cursor: pointer; transition: background 0.2s;"
+                 onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+                 onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+              <div style="font-weight: 600; color: var(--text);">${movie.title || 'Untitled'}</div>
+              <div style="font-size: 0.85em; color: var(--text-soft); margin-top: 4px;">
+                ${(movie.genres || []).slice(0, 2).join(' • ')} ${movie.year ? '• ' + movie.year : ''}
+              </div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
+      
+      html += `</div>`;
+      body.insertAdjacentHTML('beforeend', html);
+      
+      // Scroll to response
+      const response = body.querySelector('.ai-response');
+      if (response) response.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Process AI query
+    async function processAIQuery(query) {
+      if (!query || query.trim().length === 0) {
+        showAIResponse("Please ask me something! I can suggest movies, answer questions, or help you find what to watch.");
+        return;
+      }
+
+      // Show loading state
+      showAIResponse("Thinking...", null);
+
+      const lowerQuery = query.toLowerCase().trim();
+      
+      // Load movies if needed - wait a bit for searchEngine to initialize
+      await getMovies();
+      
+      // Try multiple sources for movies
+      if (allMovies.length === 0) {
+        // Wait a moment for searchEngine to load
+        await new Promise(resolve => setTimeout(resolve, 500));
+        allMovies = window.searchEngine?.moviesData || [];
+      }
+      
+      // If still no movies, try direct fetch
+      if (allMovies.length === 0) {
+        try {
+          const res = await fetch('/api/movies');
+          if (res.ok) {
+            allMovies = await res.json();
+          } else {
+            const jsonRes = await fetch('movies.json');
+            if (jsonRes.ok) {
+              allMovies = await jsonRes.json();
+            }
+          }
+        } catch (e) {
+          console.error('AI: Failed to load movies:', e);
+        }
+      }
+      
+      // Final check - if no movies, show error
+      if (allMovies.length === 0) {
+        showAIResponse("Sorry, I couldn't load the movie database. Please refresh the page and try again.");
+        return;
+      }
+
+      // Mood-based suggestions
+      if (lowerQuery.includes('calm') || lowerQuery.includes('peaceful') || lowerQuery.includes('relaxing')) {
+        const movies = suggestMoviesByMood('calm', 3);
+        showAIResponse("Here are some calm, peaceful movies for you:", movies);
+        return;
+      }
+
+      if (lowerQuery.includes('action') || lowerQuery.includes('exciting') || lowerQuery.includes('thrilling')) {
+        const movies = suggestMoviesByMood('action', 3);
+        showAIResponse("Here are some action-packed movies:", movies);
+        return;
+      }
+
+      if (lowerQuery.includes('comedy') || lowerQuery.includes('funny') || lowerQuery.includes('laugh')) {
+        const movies = suggestMoviesByMood('comedy', 3);
+        showAIResponse("Here are some funny movies to make you laugh:", movies);
+        return;
+      }
+
+      if (lowerQuery.includes('horror') || lowerQuery.includes('scary')) {
+        const movies = suggestMoviesByMood('horror', 3);
+        showAIResponse("Here are some horror movies:", movies);
+        return;
+      }
+
+      if (lowerQuery.includes('romance') || lowerQuery.includes('romantic') || lowerQuery.includes('love')) {
+        const movies = suggestMoviesByMood('romance', 3);
+        showAIResponse("Here are some romantic movies:", movies);
+        return;
+      }
+
+      // Search for specific movie
+      if (lowerQuery.includes('find') || lowerQuery.includes('search') || lowerQuery.includes('movie about')) {
+        const searchTerm = lowerQuery.replace(/find|search|movie about|a movie|the movie/gi, '').trim();
+        if (searchTerm) {
+          const results = allMovies.filter(m => {
+            const text = `${m.title || ''} ${m.description || ''} ${(m.genres || []).join(' ')}`.toLowerCase();
+            return text.includes(searchTerm);
+          }).slice(0, 5);
+          
+          if (results.length > 0) {
+            showAIResponse(`Found ${results.length} movie(s) about "${searchTerm}":`, results);
+          } else {
+            showAIResponse(`Sorry, I couldn't find any movies about "${searchTerm}". Try asking for a genre or mood instead!`);
+          }
+          return;
+        }
+      }
+
+      // General questions
+      if (lowerQuery.includes('how many') || lowerQuery.includes('total movies')) {
+        showAIResponse(`We have ${allMovies.length} movies available for you to watch!`);
+        return;
+      }
+
+      if (lowerQuery.includes('suggest') || lowerQuery.includes('recommend') || lowerQuery.includes('what should i watch')) {
+        const randomMovies = [];
+        const used = new Set();
+        while (randomMovies.length < 3 && randomMovies.length < allMovies.length) {
+          const random = allMovies[Math.floor(Math.random() * allMovies.length)];
+          if (!used.has(random.id)) {
+            randomMovies.push(random);
+            used.add(random.id);
+          }
+        }
+        showAIResponse("Here are some great movies I recommend:", randomMovies);
+        return;
+      }
+
+      // Default response
+      showAIResponse("I can help you find movies! Try asking for 'calm movies', 'action movies', 'suggest something', or search for a specific topic.");
+    }
+
+    // Make "Suggest 3 calm movies" button work
+    window.suggestCalmMovies = async function suggestCalmMovies() {
+      showAIResponse("Finding calm movies for you...", null);
+      
+      await getMovies();
+      
+      // Try multiple sources
+      if (allMovies.length === 0) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        allMovies = window.searchEngine?.moviesData || [];
+      }
+      
+      if (allMovies.length === 0) {
+        showAIResponse("Sorry, I couldn't load movies. Please refresh the page.");
+        return;
+      }
+      
+      const movies = suggestMoviesByMood('calm', 3);
+      if (movies.length === 0) {
+        showAIResponse("I couldn't find calm movies right now. Try asking me something else!");
+      } else {
+        showAIResponse("Here are 3 calm, peaceful movies for you:", movies);
+      }
+    };
+
+    // Make AI input field work
+    window.sendAIMessage = async function sendAIMessage() {
+      const input = document.querySelector('.ai-input-row input');
+      if (!input) return;
+      
+      const query = input.value.trim();
+      if (!query) return;
+      
+      input.value = '';
+      await processAIQuery(query);
+    };
+
+    // Initialize: Load movies and connect buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      // Connect "Suggest 3 calm movies" button
+      const calmBtn = document.querySelector('.ai-suggestions button:last-child');
+      if (calmBtn) {
+        calmBtn.onclick = suggestCalmMovies;
+        calmBtn.textContent = 'Suggest 3 calm movies';
+      }
+
+      // Connect Send button
+      const sendBtn = document.querySelector('.ai-input-row button');
+      if (sendBtn) {
+        sendBtn.onclick = sendAIMessage;
+      }
+
+      // Connect Enter key
+      const aiInput = document.querySelector('.ai-input-row input');
+      if (aiInput) {
+        aiInput.placeholder = 'Ask HalfMovies AI...';
+        aiInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            sendAIMessage();
+          }
+        });
+      }
+
+      // Pre-load movies in background
+      setTimeout(() => {
+        getMovies();
+        // Also wait for searchEngine to initialize
+        if (window.searchEngine && typeof window.searchEngine.init === 'function') {
+          window.searchEngine.init().then(() => {
+            if (window.searchEngine?.moviesData) {
+              allMovies = window.searchEngine.moviesData;
+            }
+          });
+        }
+      }, 1000);
+    });
+  })();
+
+  // Smart Search Integration
+  (function() {
+    let searchTimeout = null;
+    const searchInput = document.getElementById("global-search-input");
+    const searchDropdown = document.getElementById("search-results-dropdown");
+
+    if (!searchInput || !searchDropdown) return;
+
+    // Initialize search engine
+    if (window.searchEngine) {
+      window.searchEngine.init();
+    } else {
+      // Load YouTube feeds loader script FIRST (before search engine)
+      const feedsLoaderScript = document.createElement("script");
+      feedsLoaderScript.src = "youtube-feeds-loader.js";
+      feedsLoaderScript.async = false; // Load synchronously to ensure it's available
+      document.head.appendChild(feedsLoaderScript);
+      
+      // Load search engine script
+      const script = document.createElement("script");
+      script.src = "searchEngine.js";
+      script.onload = () => {
+        if (window.searchEngine) {
+          window.searchEngine.init();
+        }
+      };
+      document.head.appendChild(script);
+    }
+
+    async function handleSearch(query) {
+      if (!query || query.length < 1) {
+        searchDropdown.style.display = "none";
+        return;
+      }
+
+      if (!window.searchEngine || !window.searchEngine.search) {
+        searchDropdown.innerHTML = '<div class="search-intent-message">Loading search...</div>';
+        searchDropdown.style.display = "block";
+        return;
+      }
+
+      try {
+        const result = await window.searchEngine.search(query);
+
+        if (result.type === "easter-egg") {
+          searchDropdown.innerHTML = `
+            <div class="search-intent-message">${result.message || "Easter egg activated!"}</div>
+          `;
+          searchDropdown.style.display = "block";
+          setTimeout(() => {
+            searchDropdown.style.display = "none";
+          }, 2000);
+          return;
+        }
+
+        let html = "";
+
+        if (result.type === "intent" || result.type === "fallback") {
+          html += `<div class="search-intent-message">${result.message || "We think you're looking for..."}</div>`;
+        }
+
+        // Show worlds
+        if (result.results?.worlds && result.results.worlds.length > 0) {
+          result.results.worlds.slice(0, 3).forEach(world => {
+            html += `
+              <div class="search-result-item" onclick="window.location.href='${world.route || "#worlds"}'">
+                <div class="search-result-type">World</div>
+                <div class="search-result-title">${world.displayName || world.name}</div>
+                <div class="search-result-meta">${world.description || ""}</div>
+              </div>
+            `;
+          });
+        }
+
+        // Show movies
+        if (result.results?.movies && result.results.movies.length > 0) {
+          result.results.movies.slice(0, 5).forEach(movie => {
+            const url = `movie.html?id=${encodeURIComponent(movie.id)}`;
+            html += `
+              <div class="search-result-item" onclick="window.location.href='${url}'">
+                <div class="search-result-type">Film</div>
+                <div class="search-result-title">${movie.title || "Untitled"}</div>
+                <div class="search-result-meta">${(movie.genres || []).slice(0, 2).join(" • ")} ${movie.year ? "• " + movie.year : ""}</div>
+              </div>
+            `;
+          });
+        }
+
+        // Show recommendations if intent
+        if (result.recommendations?.movies && result.recommendations.movies.length > 0) {
+          result.recommendations.movies.slice(0, 5).forEach(movie => {
+            const url = `movie.html?id=${encodeURIComponent(movie.id)}`;
+            html += `
+              <div class="search-result-item" onclick="window.location.href='${url}'">
+                <div class="search-result-type">Recommendation</div>
+                <div class="search-result-title">${movie.title || "Untitled"}</div>
+                <div class="search-result-meta">${(movie.genres || []).slice(0, 2).join(" • ")}</div>
+              </div>
+            `;
+          });
+        }
+
+        if (html) {
+          html += `<div class="search-see-all" onclick="window.location.href='search-results.html?q=${encodeURIComponent(query)}'">See all results →</div>`;
+          searchDropdown.innerHTML = html;
+          searchDropdown.style.display = "block";
+        } else {
+          searchDropdown.style.display = "none";
+        }
+      } catch (error) {
+        console.error("Search error:", error);
+        searchDropdown.style.display = "none";
+      }
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value;
+      
+      clearTimeout(searchTimeout);
+      
+      if (query.length < 1) {
+        searchDropdown.style.display = "none";
+        return;
+      }
+
+      searchTimeout = setTimeout(() => {
+        handleSearch(query);
+      }, 300);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const query = e.target.value;
+        if (query && query.length > 0) {
+          window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+        }
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+        searchDropdown.style.display = "none";
+      }
+    });
+  })();
+  </script>
+</html>
+

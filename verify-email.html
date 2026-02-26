@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verify email – HalfMovies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <style>
+    :root {
+      --bg: #050712;
+      --accent: #ff4b8b;
+      --accent-2: #4b9dff;
+      --text-main: #f9fbff;
+      --text-soft: #a6b0d8;
+      --card: #0c1023;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --radius-lg: 22px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: radial-gradient(circle at top, #191c3b 0, #050712 46%, #020309 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(12,16,35,0.98));
+      backdrop-filter: blur(22px);
+      text-align: center;
+    }
+    .auth-card h1 { font-size: 22px; margin-bottom: 12px; }
+    .auth-card p { color: var(--text-soft); font-size: 15px; line-height: 1.5; margin-bottom: 20px; }
+    .auth-card .success { color: #69db7c; }
+    .auth-card .error { color: #ff6b6b; }
+    .auth-card .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+    .auth-card .btn:hover { opacity: 0.95; text-decoration: none; }
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 32px;
+      color: var(--text-main);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 14px;
+    }
+    .logo-link:hover { text-decoration: none; opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <a href="/" class="logo-link">← HALFMOVIES</a>
+  <div class="auth-card">
+    <div id="result">
+      <p>Verifying your email…</p>
+    </div>
+  </div>
+  <script>
+    (async function () {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+      const resultEl = document.getElementById("result");
+      if (!token) {
+        resultEl.innerHTML = '<h1>Missing link</h1><p class="error">No verification token. Use the link from your email.</p><a href="/" class="btn">Back to HalfMovies</a>';
+        return;
+      }
+      try {
+        const res = await fetch("/api/auth/verify-email?token=" + encodeURIComponent(token));
+        const data = await res.json().catch(() => ({}));
+        if (res.ok) {
+          resultEl.innerHTML = '<h1>Email verified</h1><p class="success">' + (data.message || "You can now log in.") + '</p><a href="login.html" class="btn">Log in</a>';
+        } else {
+          resultEl.innerHTML = '<h1>Link invalid or expired</h1><p class="error">' + (data.message || "This link has expired. Request a new verification email by signing up again or contact support.") + '</p><a href="signup.html" class="btn">Create account</a>';
+        }
+      } catch (err) {
+        resultEl.innerHTML = '<h1>Error</h1><p class="error">Something went wrong. Try again later.</p><a href="/" class="btn">Back to HalfMovies</a>';
+      }
+    })();
+  </script>
+</body>
+</html>

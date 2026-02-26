@@ -1,0 +1,20 @@
+===========================================
+YouTube Full Movies API - PowerShell Commands
+===========================================
+
+A) Set API Key:
+$env:YT_API_KEY="86674e62869c10dfe32bd32178026942"
+
+B) Set Target and Run:
+$env:TARGET="200"
+node .\make-full-movies-api.mjs
+
+C) Verify Results:
+( Get-Content .\full-movies.200.json -Raw | ConvertFrom-Json ).Count
+
+===========================================
+Or run all at once:
+===========================================
+
+$env:YT_API_KEY="86674e62869c10dfe32bd32178026942"; $env:TARGET="200"; node .\make-full-movies-api.mjs; Write-Host "`n✅ Movies found: $(( Get-Content .\full-movies.200.json -Raw | ConvertFrom-Json ).Count)" -ForegroundColor Green
+

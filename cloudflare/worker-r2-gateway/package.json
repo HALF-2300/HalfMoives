@@ -1,0 +1,14 @@
+{
+  "name": "halfmovies-r2-gateway",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "create-bucket": "wrangler r2 bucket create halfmovies-private",
+    "secret": "wrangler secret put R2_GATEWAY_SECRET",
+    "setup": "echo Run these in order: 1) Enable R2 in Cloudflare Dashboard  2) npm run create-bucket  3) npm run secret  4) npm run deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

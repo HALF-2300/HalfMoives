@@ -1,0 +1,42 @@
+// AICollab-NX → AICore-X1: LearningSession Model Proposal
+// Phase 3.5 - Cooperative Intelligence Integration
+
+model LearningSession {
+  id            String   @id @default(cuid())
+  sessionId     String   @unique // Unique session identifier
+  timestamp     DateTime  @default(now())
+  
+  // Learning metrics
+  deltaAccuracy Float?   // Change in recommendation accuracy (Δ)
+  sourceModule  String   // "AICore-X1" | "AICollab-NX" | "EnhancedLearning"
+  impactScore   Float    @default(0.0) // 0.0 to 1.0 - impact on system
+  
+  // Weight synchronization
+  weightDistribution Json? // Snapshot of model weights at this session
+  weightDelta        Json? // Change in weights from previous session
+  
+  // Validation metrics
+  recommendationAccuracy Float? // Measured accuracy for this session
+  validationStatus       String? // "validated" | "pending" | "failed"
+  validationTimestamp    DateTime?
+  
+  // Instability detection
+  instabilityThreshold   Float? // Detected threshold for instability
+  stabilityScore          Float? // 0.0 to 1.0 - how stable the learning is
+  
+  // Coordination metadata
+  coordinationStatus      String  @default("pending") // "synced" | "pending" | "conflict"
+  lastSyncTimestamp       DateTime?
+  nextSyncScheduled       DateTime?
+  
+  // Metadata
+  metadata                Json?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  
+  @@index([sessionId])
+  @@index([timestamp])
+  @@index([sourceModule])
+  @@index([coordinationStatus])
+}
+

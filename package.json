@@ -1,0 +1,37 @@
+{
+  "name": "halfmovie-app",
+  "version": "1.0.0",
+  "description": "HalfMovie frontend + lightweight backend",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "proxy": "node proxy.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "make:channels": "node ./make-channels-1000.mjs",
+    "pull:youtube": "node pull-youtube-movies.cjs",
+    "fix:posters": "node fix-posters-and-clean.cjs",
+    "fix:posters-remove": "node fix-posters-and-clean.cjs --remove",
+    "check:functioning": "node check-functioning.cjs",
+    "remove:no-link": "node check-functioning.cjs --remove"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.22.1",
+    "fs": "^0.0.1-security",
+    "http-proxy": "^1.18.1",
+    "nodemailer": "^8.0.1",
+    "openai": "^4.55.4",
+    "path": "^0.12.7",
+    "pg": "^8.16.3",
+    "resend": "^6.9.2",
+    "vite": "^7.2.7"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

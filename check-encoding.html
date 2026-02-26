@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Check Movies.json Encoding</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    .success { color: #44ff44; }
+    .error { color: #ff4444; }
+    .info { color: #4444ff; }
+    pre { background: #2a2a2a; padding: 10px; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Movies.json Encoding Check</h1>
+  <div id="result"></div>
+
+  <script>
+    async function checkEncoding() {
+      const result = document.getElementById('result');
+      result.innerHTML = '<p class="info">Loading movies.json...</p>';
+
+      try {
+        const response = await fetch('movies.json');
+        if (!response.ok) {
+          result.innerHTML = '<p class="error">❌ Failed to load movies.json (404 Not Found)</p>';
+          return;
+        }
+
+        const text = await response.text();
+        const movies = JSON.parse(text);
+
+        // Check for encoding issues
+        const issues = [];
+        movies.forEach((movie, index) => {
+          const text = JSON.stringify(movie);
+          if (text.includes('â€"') || text.includes('â€"') || text.includes('LÃ©onetti') || text.includes('fiancÃ©e')) {
+            issues.push(`Movie ${index + 1}: "${movie.title}" has encoding issues`);
+          }
+        });
+
+        if (issues.length === 0) {
+          result.innerHTML = `
+            <p class="success">✅ SUCCESS! movies.json is loaded correctly!</p>
+            <p class="success">Total movies: ${movies.length}</p>
+            <p class="info">No encoding issues found. Your website should work correctly.</p>
+            <p class="info">If the Hostinger editor shows weird characters, that's just a display issue - the actual file is fine!</p>
+          `;
+        } else {
+          result.innerHTML = `
+            <p class="error">❌ Encoding issues found:</p>
+            <ul>
+              ${issues.map(issue => `<li class="error">${issue}</li>`).join('')}
+            </ul>
+            <p class="info">The file needs to be re-uploaded with correct encoding.</p>
+          `;
+        }
+
+        // Show first movie as example
+        if (movies.length > 0) {
+          const first = movies[0];
+          result.innerHTML += `
+            <h2>First Movie (Example):</h2>
+            <pre>${JSON.stringify(first, null, 2)}</pre>
+          `;
+        }
+
+      } catch (error) {
+        result.innerHTML = `
+          <p class="error">❌ Error: ${error.message}</p>
+          <p class="info">This usually means the JSON file is corrupted or has syntax errors.</p>
+        `;
+      }
+    }
+
+    checkEncoding();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Movie Finder - Multiple Searches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff0000;
+        }
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .search-card {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .search-card a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .search-card a:hover {
+            color: #66BB6A;
+        }
+        .instructions {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4CAF50;
+        }
+        .instructions ol {
+            line-height: 1.8;
+        }
+        .copy-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background: #66BB6A;
+        }
+        .json-output {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .found-movies {
+            margin-top: 20px;
+        }
+        .movie-item {
+            background: #2a2a2a;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #4CAF50;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 YouTube Movie Finder - Find Multiple Movies</h1>
+        
+        <div class="instructions">
+            <h2>📋 Instructions:</h2>
+            <ol>
+                <li>Click each search link below to open YouTube</li>
+                <li>Find full movies (not trailers) - look for videos 60+ minutes</li>
+                <li>Copy the YouTube URL of each movie</li>
+                <li>Fill in the form below with: Title, Year, URL</li>
+                <li>Click "Add Movie" for each one</li>
+                <li>When done, copy the JSON output and save to <code>youtube-movies-found.json</code></li>
+                <li>Run: <code>node find-free-youtube-movies.cjs</code></li>
+            </ol>
+        </div>
+
+        <h2>🔍 Search Links (Click to open in new tab):</h2>
+        <div class="search-grid">
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=free+full+movie" target="_blank">Search 1: Free Full Movie</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=public+domain+movies+full" target="_blank">Search 2: Public Domain Movies</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=classic+movies+free+full" target="_blank">Search 3: Classic Movies</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=complete+movie+free" target="_blank">Search 4: Complete Movie Free</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=full+movie+free+youtube" target="_blank">Search 5: Full Movie Free</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=action+movie+free+full" target="_blank">Search 6: Action Movies</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=comedy+movie+free+full" target="_blank">Search 7: Comedy Movies</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=drama+movie+free+full" target="_blank">Search 8: Drama Movies</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=horror+movie+free+full" target="_blank">Search 9: Horror Movies</a>
+            </div>
+            <div class="search-card">
+                <a href="https://www.youtube.com/results?search_query=sci-fi+movie+free+full" target="_blank">Search 10: Sci-Fi Movies</a>
+            </div>
+        </div>
+
+        <div class="found-movies">
+            <h2>📝 Add Movies Found:</h2>
+            <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                <input type="text" id="movieTitle" placeholder="Movie Title">
+                <input type="number" id="movieYear" placeholder="Year (optional)">
+                <input type="text" id="movieUrl" placeholder="YouTube URL (https://youtube.com/watch?v=...)">
+                <button class="copy-btn" onclick="addMovie()">Add Movie</button>
+                <button class="copy-btn" onclick="clearMovies()" style="background: #f44336; margin-left: 10px;">Clear All</button>
+            </div>
+
+            <div id="moviesList" style="margin-top: 20px;"></div>
+
+            <h3>📄 JSON Output (Copy this to youtube-movies-found.json):</h3>
+            <div class="json-output" id="jsonOutput">[]</div>
+            <button class="copy-btn" onclick="copyJSON()">Copy JSON</button>
+        </div>
+    </div>
+
+    <script>
+        let foundMovies = [];
+
+        function addMovie() {
+            const title = document.getElementById('movieTitle').value.trim();
+            const year = document.getElementById('movieYear').value;
+            const url = document.getElementById('movieUrl').value.trim();
+
+            if (!title || !url) {
+                alert('Please fill in Title and URL!');
+                return;
+            }
+
+            // Extract video ID to verify it's a valid YouTube URL
+            const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
+            if (!videoIdMatch) {
+                alert('Invalid YouTube URL! Use format: https://youtube.com/watch?v=VIDEO_ID');
+                return;
+            }
+
+            const movie = {
+                title: title,
+                year: year ? parseInt(year) : null,
+                url: url,
+                description: `Watch ${title}${year ? ` (${year})` : ''} free on YouTube.`,
+                genres: ["Movie"],
+                tags: ["free", "youtube"]
+            };
+
+            foundMovies.push(movie);
+            updateDisplay();
+            
+            // Clear inputs
+            document.getElementById('movieTitle').value = '';
+            document.getElementById('movieYear').value = '';
+            document.getElementById('movieUrl').value = '';
+            document.getElementById('movieTitle').focus();
+        }
+
+        function clearMovies() {
+            if (confirm('Clear all movies?')) {
+                foundMovies = [];
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            const listDiv = document.getElementById('moviesList');
+            const jsonDiv = document.getElementById('jsonOutput');
+            
+            // Update list
+            if (foundMovies.length === 0) {
+                listDiv.innerHTML = '<p style="color: #888;">No movies added yet. Use the form above to add movies.</p>';
+            } else {
+                listDiv.innerHTML = '<h3>✅ Found Movies (' + foundMovies.length + '):</h3>' +
+                    foundMovies.map((m, i) => `
+                        <div class="movie-item">
+                            <strong>${m.title}${m.year ? ` (${m.year})` : ''}</strong><br>
+                            <a href="${m.url}" target="_blank" style="color: #4CAF50;">${m.url}</a>
+                            <button onclick="removeMovie(${i})" style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right;">Remove</button>
+                        </div>
+                    `).join('');
+            }
+            
+            // Update JSON
+            jsonDiv.textContent = JSON.stringify(foundMovies, null, 2);
+        }
+
+        function removeMovie(index) {
+            foundMovies.splice(index, 1);
+            updateDisplay();
+        }
+
+        function copyJSON() {
+            const json = document.getElementById('jsonOutput').textContent;
+            navigator.clipboard.writeText(json).then(() => {
+                alert('JSON copied to clipboard! Now save it to youtube-movies-found.json');
+            });
+        }
+
+        // Allow Enter key to add movie
+        document.getElementById('movieUrl').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addMovie();
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Movies Loading</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    .error { color: #ff4444; }
+    .success { color: #44ff44; }
+    .info { color: #4444ff; }
+    pre { background: #2a2a2a; padding: 10px; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Movies.json Test Page</h1>
+  <div id="status">Loading...</div>
+  <div id="results"></div>
+
+  <script>
+    async function testMovies() {
+      const status = document.getElementById('status');
+      const results = document.getElementById('results');
+      
+      // Test 1: Check if file exists
+      status.innerHTML = '<p class="info">Test 1: Checking if movies.json exists...</p>';
+      
+      try {
+        const response = await fetch('movies.json');
+        status.innerHTML += `<p class="${response.ok ? 'success' : 'error'}">Response status: ${response.status} ${response.statusText}</p>`;
+        
+        if (!response.ok) {
+          results.innerHTML = `<p class="error">❌ Error: Cannot load movies.json (Status: ${response.status})</p>
+            <p>Possible issues:</p>
+            <ul>
+              <li>File not in the same directory as this HTML file</li>
+              <li>File name is different (check case sensitivity: movies.json vs Movies.json)</li>
+              <li>File permissions issue on server</li>
+            </ul>`;
+          return;
+        }
+        
+        // Test 2: Try to parse JSON
+        status.innerHTML += '<p class="info">Test 2: Parsing JSON...</p>';
+        const text = await response.text();
+        status.innerHTML += `<p class="success">✅ File loaded! Size: ${(text.length / 1024).toFixed(2)} KB</p>`;
+        
+        try {
+          const movies = JSON.parse(text);
+          status.innerHTML += `<p class="success">✅ JSON is valid! Found ${movies.length} movies</p>`;
+          
+          // Test 3: Show first few movies
+          results.innerHTML = '<h2>First 5 Movies:</h2><pre>' + 
+            JSON.stringify(movies.slice(0, 5), null, 2) + '</pre>';
+          
+          // Test 4: Check for common issues
+          const issues = [];
+          movies.forEach((movie, index) => {
+            if (!movie.id) issues.push(`Movie ${index + 1} missing ID`);
+            if (!movie.title) issues.push(`Movie ${index + 1} missing title`);
+            if (!movie.hlsUrl && !movie.url) issues.push(`Movie ${index + 1} (${movie.title || 'unknown'}) missing video URL`);
+          });
+          
+          if (issues.length > 0) {
+            results.innerHTML += '<h2>⚠️ Issues Found:</h2><ul>';
+            issues.slice(0, 10).forEach(issue => {
+              results.innerHTML += `<li class="error">${issue}</li>`;
+            });
+            results.innerHTML += '</ul>';
+          } else {
+            results.innerHTML += '<p class="success">✅ All movies have required fields!</p>';
+          }
+          
+        } catch (parseError) {
+          status.innerHTML += `<p class="error">❌ JSON Parse Error: ${parseError.message}</p>`;
+          results.innerHTML = `<p class="error">First 500 characters of file:</p><pre>${text.substring(0, 500)}</pre>`;
+        }
+        
+      } catch (error) {
+        status.innerHTML += `<p class="error">❌ Network Error: ${error.message}</p>`;
+        results.innerHTML = `<p class="error">Check browser console (F12) for more details.</p>`;
+      }
+    }
+    
+    testMovies();
+  </script>
+</body>
+</html>
+

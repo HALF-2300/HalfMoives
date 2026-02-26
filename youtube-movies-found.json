@@ -1,0 +1,11 @@
+[
+  {
+    "title": "Example Movie",
+    "year": 2020,
+    "url": "https://www.youtube.com/watch?v=VIDEO_ID_HERE",
+    "description": "Movie description here",
+    "genres": ["Action", "Thriller"],
+    "tags": ["free", "youtube"]
+  }
+]
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Check Movies Count</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #050712; color: #fff; }
+    .success { color: #4b9dff; }
+    .error { color: #ff4b8b; }
+  </style>
+</head>
+<body>
+  <h1>Movies Count Check</h1>
+  <div id="result">Loading...</div>
+  <script>
+    fetch('movies.json')
+      .then(r => r.json())
+      .then(movies => {
+        const total = movies.length;
+        const recent = movies.filter(m => m.createdAt && m.createdAt.includes('2025-12-19'));
+        document.getElementById('result').innerHTML = `
+          <p class="success">✅ Total movies: ${total}</p>
+          <p class="success">✅ Movies added today: ${recent.length}</p>
+          <p>If you see 204 total and 120+ added today, the file is correct.</p>
+          <p>If numbers are lower, you need to upload the new movies.json file.</p>
+        `;
+      })
+      .catch(e => {
+        document.getElementById('result').innerHTML = `<p class="error">❌ Error: ${e.message}</p>`;
+      });
+  </script>
+</body>
+</html>
+

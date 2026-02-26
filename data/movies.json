@@ -1,0 +1,21 @@
+[
+  {
+    "id": "m1",
+    "title": "Free Movie Slot 01",
+    "world": "Comedy",
+    "mood": "Friends",
+    "year": 2024,
+    "rating": 8.1,
+    "synopsis": "A warm night with friends… until the joke becomes a map.<br><br><a href=\"YOUR_LINK_HERE\" target=\"_blank\" rel=\"noopener\">▶ Watch now</a>"
+  },
+  {
+    "id": "m2",
+    "title": "Free Movie Slot 02",
+    "world": "Action",
+    "mood": "Rush",
+    "year": 2023,
+    "rating": 7.7,
+    "synopsis": "One wrong move, and the city becomes a corridor that never ends.<br><br><a href=\"YOUR_LINK_HERE\" target=\"_blank\" rel=\"noopener\">▶ Watch now</a>"
+  }
+]
+

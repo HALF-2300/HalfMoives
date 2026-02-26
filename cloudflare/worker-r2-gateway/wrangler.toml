@@ -1,0 +1,14 @@
+name = "halfmovies-r2-gateway"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Private R2 bucket – create with: wrangler r2 bucket create halfmovies-private
+# Do NOT enable public access on the bucket.
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "halfmovies-private"
+
+# Secret: set with wrangler secret put R2_GATEWAY_SECRET
+# Use a long random string (e.g. openssl rand -hex 32)
+# [vars]
+# R2_GATEWAY_SECRET = "set-via-secret"

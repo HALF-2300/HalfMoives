@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Debug Movies Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #050712;
+      color: #f9fbff;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .error { color: #ff4b8b; }
+    .success { color: #4b9dff; }
+    .warning { color: #ffaa00; }
+    .info { color: #a6b0d8; }
+    pre { background: #0c1023; padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); font-size: 12px; }
+    .movie-item { padding: 15px; margin: 10px 0; background: #0c1023; border-radius: 8px; border-left: 3px solid #4b9dff; }
+    .movie-item.has-youtube { border-left-color: #4b9dff; }
+    .movie-item.no-youtube { border-left-color: #ffaa00; }
+    .movie-item.error { border-left-color: #ff4b8b; }
+    h2 { margin-top: 30px; color: #ff4b8b; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+    .card { background: #0c1023; border-radius: 8px; padding: 10px; border: 1px solid rgba(255,255,255,0.1); }
+    .card img { width: 100%; height: auto; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Debug Movies Display</h1>
+  <div id="status">Loading...</div>
+  <div id="results"></div>
+  <div id="grid-preview"></div>
+
+  <script>
+    async function debugMovies() {
+      const status = document.getElementById('status');
+      const results = document.getElementById('results');
+      const gridPreview = document.getElementById('grid-preview');
+      
+      status.innerHTML = '<p class="info">🔄 Loading movies.json...</p>';
+      
+      try {
+        let response = null;
+        const paths = ['movies.json', './movies.json', '/movies.json', '/api/movies'];
+        
+        for (const path of paths) {
+          try {
+            response = await fetch(path);
+            if (response.ok) {
+              status.innerHTML += `<p class="success">✅ Found at: ${path}</p>`;
+              break;
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+        
+        if (!response || !response.ok) {
+          status.innerHTML += `<p class="error">❌ Cannot load movies.json</p>`;
+          return;
+        }
+        
+        const movies = await response.json();
+        status.innerHTML += `<p class="success">✅ Loaded ${movies.length} movies</p>`;
+        
+        // Analyze movies
+        const analysis = {
+          total: movies.length,
+          withHlsUrl: 0,
+          withoutHlsUrl: 0,
+          withYouTubeEmbed: 0,
+          withPosterUrl: 0,
+          withThumbnailUrl: 0,
+          recentMovies: [],
+          issues: []
+        };
+        
+        movies.forEach((movie, index) => {
+          // Check if recent (added today)
+          const isRecent = movie.createdAt && movie.createdAt.includes('2025-12-19');
+          
+          if (isRecent) {
+            analysis.recentMovies.push(movie);
+          }
+          
+          // Count stats
+          if (movie.hlsUrl) {
+            analysis.withHlsUrl++;
+            if (movie.hlsUrl.includes('youtube.com/embed')) {
+              analysis.withYouTubeEmbed++;
+            }
+          } else {
+            analysis.withoutHlsUrl++;
+          }
+          
+          if (movie.posterUrl) analysis.withPosterUrl++;
+          if (movie.thumbnailUrl) analysis.withThumbnailUrl++;
+          
+          // Check for issues
+          if (!movie.title) {
+            analysis.issues.push(`Movie ${index + 1}: Missing title`);
+          }
+          if (!movie.id) {
+            analysis.issues.push(`Movie ${index + 1}: Missing ID`);
+          }
+        });
+        
+        // Display analysis
+        let html = '';
+        
+        html += `<h2>📊 Statistics</h2>`;
+        html += `<p>Total movies: <strong>${analysis.total}</strong></p>`;
+        html += `<p>With hlsUrl: <strong class="success">${analysis.withHlsUrl}</strong></p>`;
+        html += `<p>Without hlsUrl: <strong class="warning">${analysis.withoutHlsUrl}</strong></p>`;
+        html += `<p>With YouTube embed: <strong class="success">${analysis.withYouTubeEmbed}</strong></p>`;
+        html += `<p>With posterUrl: <strong>${analysis.withPosterUrl}</strong></p>`;
+        html += `<p>Recent movies (added today): <strong>${analysis.recentMovies.length}</strong></p>`;
+        
+        if (analysis.issues.length > 0) {
+          html += `<h2>⚠️ Issues Found</h2>`;
+          html += `<ul>`;
+          analysis.issues.slice(0, 10).forEach(issue => {
+            html += `<li class="error">${issue}</li>`;
+          });
+          html += `</ul>`;
+        }
+        
+        // Show recent movies
+        if (analysis.recentMovies.length > 0) {
+          html += `<h2>🎬 Recent Movies (Added Today - ${analysis.recentMovies.length})</h2>`;
+          analysis.recentMovies.forEach(movie => {
+            const hasHls = !!movie.hlsUrl;
+            const hasPoster = !!movie.posterUrl;
+            const hasThumb = !!movie.thumbnailUrl;
+            const youtubeId = movie.hlsUrl ? movie.hlsUrl.match(/embed\/([^?]+)/)?.[1] : null;
+            
+            html += `<div class="movie-item ${hasHls ? 'has-youtube' : 'no-youtube'}">`;
+            html += `<strong>${movie.title}</strong> (${movie.year})<br>`;
+            html += `ID: <code>${movie.id}</code><br>`;
+            html += `hlsUrl: ${hasHls ? `<span class="success">✅ ${movie.hlsUrl}</span>` : '<span class="warning">❌ null</span>'}<br>`;
+            html += `YouTube ID: ${youtubeId ? `<span class="success">✅ ${youtubeId}</span>` : '<span class="warning">❌ none</span>'}<br>`;
+            html += `posterUrl: ${hasPoster ? '✅' : '❌'}<br>`;
+            html += `thumbnailUrl: ${hasThumb ? '✅' : '❌'}<br>`;
+            html += `Genres: ${(movie.genres || []).join(', ') || 'None'}<br>`;
+            html += `Created: ${movie.createdAt || 'Unknown'}`;
+            html += `</div>`;
+          });
+        }
+        
+        results.innerHTML = html;
+        
+        // Test video ID extraction (same as index.html)
+        html = '<h2>🎥 Grid Preview (Testing Display Logic)</h2>';
+        html += '<div class="grid">';
+        
+        analysis.recentMovies.slice(0, 12).forEach(movie => {
+          let videoId = "";
+          const videoUrl = movie.hlsUrl || movie.url || "";
+          
+          if (videoUrl.includes("embed/")) {
+            videoId = videoUrl.split("embed/")[1].split("?")[0];
+          } else if (videoUrl.includes("watch?v=")) {
+            videoId = videoUrl.split("watch?v=")[1].split("&")[0];
+          } else if (videoUrl.includes("youtu.be/")) {
+            videoId = videoUrl.split("youtu.be/")[1].split("?")[0];
+          }
+          
+          const thumbnail = videoId 
+            ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+            : (movie.posterUrl || movie.thumbnailUrl || "https://placehold.co/300x450/0f172a/ffffff?text=HalfMovie");
+          
+          html += `<div class="card">`;
+          html += `<img src="${thumbnail}" alt="${movie.title}" onerror="this.src='https://placehold.co/300x450/0f172a/ffffff?text=Error'">`;
+          html += `<div style="padding: 10px 0; font-size: 12px;">`;
+          html += `<strong>${movie.title}</strong><br>`;
+          html += `<span class="info">${movie.year || ''}</span><br>`;
+          html += `${videoId ? `<span class="success">YouTube: ${videoId}</span>` : '<span class="warning">No video</span>'}`;
+          html += `</div>`;
+          html += `</div>`;
+        });
+        
+        html += '</div>';
+        gridPreview.innerHTML = html;
+        
+      } catch (error) {
+        status.innerHTML += `<p class="error">❌ Error: ${error.message}</p>`;
+        results.innerHTML = `<pre>${error.stack}</pre>`;
+      }
+    }
+    
+    debugMovies();
+  </script>
+</body>
+</html>
+

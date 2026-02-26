@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3436;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="300" height="450" fill="url(#grad3)"/>
+  
+  <!-- Dice/Luck symbols -->
+  <rect x="80" y="80" width="35" height="35" fill="#ffd93d" opacity="0.8"/>
+  <circle cx="97" cy="97" r="3" fill="#000"/>
+  
+  <rect x="185" y="120" width="40" height="40" fill="#ffd93d" opacity="0.6" transform="rotate(45 205 140)"/>
+  
+  <!-- Four leaf clover -->
+  <circle cx="240" cy="200" r="8" fill="#6bcf7f" opacity="0.7"/>
+  <circle cx="250" cy="200" r="8" fill="#6bcf7f" opacity="0.7"/>
+  <circle cx="245" cy="190" r="8" fill="#6bcf7f" opacity="0.7"/>
+  <circle cx="245" cy="210" r="8" fill="#6bcf7f" opacity="0.7"/>
+  
+  <!-- Title -->
+  <text x="150" y="240" font-size="48" font-weight="bold" text-anchor="middle" fill="#ffd93d" letter-spacing="1">LUCKY</text>
+  <text x="150" y="300" font-size="48" font-weight="bold" text-anchor="middle" fill="#6bcf7f" letter-spacing="1">LOUIE</text>
+  
+  <!-- Info -->
+  <text x="150" y="420" font-size="14" text-anchor="middle" fill="#ffd93d">2023 • Comedy Mystery</text>
+</svg>

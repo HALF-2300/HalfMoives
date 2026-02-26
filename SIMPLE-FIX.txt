@@ -1,0 +1,31 @@
+===========================================
+SIMPLE SOLUTION - NO UPLOAD NEEDED!
+===========================================
+
+GOOD NEWS: I've already added automatic encoding fixes to your HTML files!
+
+WHAT YOU NEED TO DO:
+-------------------
+1. The updated index.html and movie.html files on your computer already have the fix
+2. Just copy-paste them into Hostinger's file editor to replace the old ones
+3. The corrupted movies.json will STILL WORK because the fix runs automatically
+
+WHERE TO FIND UPLOAD (if it exists):
+------------------------------------
+- Look at the TOP of the File Manager page
+- Look for buttons like: "Upload", "Upload Files", or an upload icon (cloud with arrow)
+- Sometimes it's in a menu: Click "Actions" or "Tools" menu
+- Try RIGHT-CLICKING in an empty area of the file list
+
+IF YOU CAN'T FIND UPLOAD:
+-------------------------
+Don't worry! The client-side fix I added will automatically fix encoding issues.
+Just make sure you upload the updated index.html and movie.html files.
+
+The website will work even with corrupted movies.json because the JavaScript
+automatically fixes:
+- â€" → -
+- LÃ©onetti → Leonetti  
+- fiancÃ©e → fiancee
+
+===========================================

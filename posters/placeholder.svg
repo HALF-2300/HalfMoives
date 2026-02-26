@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
+  <rect width="600" height="900" fill="#1e293b"/>
+  <rect x="40" y="40" width="520" height="820" fill="#0f172a" stroke="#64748b" stroke-width="6"/>
+  <text x="50%" y="45%" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="56" text-anchor="middle">Poster</text>
+  <text x="50%" y="55%" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="56" text-anchor="middle">Unavailable</text>
+  <text x="50%" y="80%" fill="#94a3b8" font-family="Arial, sans-serif" font-size="28" text-anchor="middle">WorldStream Max</text>
+</svg>

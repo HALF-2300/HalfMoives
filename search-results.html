@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Search Results - HalfMovies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <style>
+    :root {
+      --bg: #050712;
+      --bg-alt: #080b1a;
+      --accent: #ff4b8b;
+      --accent-soft: rgba(255, 75, 139, 0.2);
+      --accent-2: #4b9dff;
+      --text-main: #f9fbff;
+      --text-soft: #a6b0d8;
+      --card: #0c1023;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: radial-gradient(circle at top, #191c3b 0, #050712 46%, #020309 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    header.site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 18px;
+      margin-bottom: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(8, 11, 26, 0.95));
+      backdrop-filter: blur(22px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.75);
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 14px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .logo-pill {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 20% 0, #ffe4f1 0, #ff4b8b 32%, #6f2bff 80%);
+      box-shadow: 0 0 38px rgba(255,75,139,0.55);
+    }
+
+    .back-link {
+      color: var(--text-soft);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-link:hover {
+      color: var(--text-main);
+    }
+
+    .search-header {
+      margin-bottom: 32px;
+    }
+
+    .search-query {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .search-query span {
+      color: var(--accent);
+    }
+
+    .search-message {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 24px;
+    }
+
+    .results-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .media-card {
+      border-radius: var(--radius-md);
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      min-height: 230px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.9);
+    }
+
+    .media-poster {
+      position: relative;
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(80%);
+    }
+
+    .media-poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.1));
+      opacity: 0.96;
+    }
+
+    .media-body {
+      padding: 10px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .media-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .media-meta {
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .world-card {
+      border-radius: var(--radius-md);
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      padding: 18px;
+      margin-bottom: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .world-card:hover {
+      transform: translateX(4px);
+    }
+
+    .world-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .world-description {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    .intent-message {
+      background: rgba(255, 75, 139, 0.1);
+      border: 1px solid rgba(255, 75, 139, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .take-me-to-world {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #050712;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 38px rgba(255,75,139,0.55);
+    }
+
+    .take-me-to-world:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(255,75,139,0.65);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-soft);
+    }
+
+    .no-results-title {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <div class="logo">
+        <div class="logo-pill"></div>
+        <span>HALFMOVIES</span>
+      </div>
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </header>
+
+    <div class="search-header">
+      <div class="search-query">
+        Search: <span id="query-display"></span>
+      </div>
+      <div class="search-message" id="search-message"></div>
+    </div>
+
+    <div id="results-container">
+      <div class="no-results">
+        <div class="no-results-title">Loading search results...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="searchEngine.js"></script>
+  <script>
+    (async function() {
+      // Get query from URL
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('q') || '';
+
+      if (!query) {
+        document.getElementById('results-container').innerHTML = `
+          <div class="no-results">
+            <div class="no-results-title">No search query provided</div>
+            <p>Please enter a search term.</p>
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById('query-display').textContent = query;
+
+      // Initialize search engine
+      if (window.searchEngine) {
+        await window.searchEngine.init();
+      }
+
+      // Perform search
+      if (!window.searchEngine || !window.searchEngine.search) {
+        document.getElementById('results-container').innerHTML = `
+          <div class="no-results">
+            <div class="no-results-title">Search engine not loaded</div>
+            <p>Please refresh the page.</p>
+          </div>
+        `;
+        return;
+      }
+
+      try {
+        const result = await window.searchEngine.search(query);
+        let html = '';
+
+        // Handle different result types
+        if (result.type === 'easter-egg') {
+          html = `
+            <div class="intent-message">
+              ${result.message || 'Easter egg activated!'}
+            </div>
+          `;
+        } else if (result.type === 'intent' || result.type === 'fallback') {
+          if (result.message) {
+            document.getElementById('search-message').textContent = result.message;
+          }
+
+          // Show recommended worlds
+          if (result.recommendations?.worlds && result.recommendations.worlds.length > 0) {
+            html += '<div class="results-section">';
+            html += '<div class="section-title">Recommended Worlds</div>';
+            result.recommendations.worlds.forEach(worldId => {
+              // Find world in searchIndex
+              if (window.searchEngine && window.searchEngine.searchIndex) {
+                const world = window.searchEngine.searchIndex.worlds?.find(w => w.id === worldId);
+                if (world) {
+                  html += `
+                    <div class="world-card" onclick="window.location.href='${world.route || '#worlds'}'">
+                      <div class="world-name">${world.displayName || world.name}</div>
+                      <div class="world-description">${world.description || ''}</div>
+                    </div>
+                  `;
+                }
+              }
+            });
+            html += '</div>';
+          }
+
+          // Show recommended movies
+          if (result.recommendations?.movies && result.recommendations.movies.length > 0) {
+            html += '<div class="results-section">';
+            html += '<div class="section-title">We think you\'re looking for...</div>';
+            html += '<div class="media-grid">';
+            result.recommendations.movies.forEach(movie => {
+              const videoUrl = movie.hlsUrl || movie.url || '';
+              let videoId = '';
+              if (videoUrl && typeof videoUrl === 'string') {
+                if (videoUrl.includes('embed/')) {
+                  videoId = videoUrl.split('embed/')[1].split('?')[0].split('&')[0];
+                } else if (videoUrl.includes('watch?v=')) {
+                  videoId = videoUrl.split('watch?v=')[1].split('&')[0].split('#')[0];
+                } else if (videoUrl.includes('youtu.be/')) {
+                  videoId = videoUrl.split('youtu.be/')[1].split('?')[0].split('&')[0];
+                }
+              }
+              // Priority: 1) Local poster (posterUrl with posters/), 2) posterUrl, 3) YouTube thumbnail, 4) thumbnailUrl, 5) placeholder
+              let thumbnail = '';
+              
+              // Check for local poster file first (if posterUrl points to posters/ folder)
+              if (movie.posterUrl && movie.posterUrl.includes('posters/')) {
+                thumbnail = movie.posterUrl;
+              } else if (movie.posterUrl && !movie.posterUrl.includes('placehold')) {
+                thumbnail = movie.posterUrl;
+              } else if (videoId && videoId.length === 11) {
+                thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+              } else if (movie.thumbnailUrl && !movie.thumbnailUrl.includes('placehold')) {
+                thumbnail = movie.thumbnailUrl;
+              } else {
+                thumbnail = 'https://placehold.co/300x450/0f172a/ffffff?text=HalfMovie';
+              }
+              
+              html += `
+                <a href="movie.html?id=${encodeURIComponent(movie.id)}" class="media-card">
+                  <div class="media-poster" style="background-image: url('${thumbnail}')"></div>
+                  <div class="media-body">
+                    <div class="media-title">${movie.title || 'Untitled'}</div>
+                    <div class="media-meta">${(movie.genres || []).slice(0, 2).join(' • ')} ${movie.year ? '• ' + movie.year : ''}</div>
+                  </div>
+                </a>
+              `;
+            });
+            html += '</div></div>';
+          }
+
+          // Add "Take me to a world" button
+          html += `
+            <div style="text-align: center; margin-top: 40px;">
+              <button class="take-me-to-world" onclick="window.location.href='index.html#worlds'">
+                Take me to a world →
+              </button>
+            </div>
+          `;
+        } else if (result.type === 'results') {
+          // Show worlds
+          if (result.results.worlds && result.results.worlds.length > 0) {
+            html += '<div class="results-section">';
+            html += '<div class="section-title">Worlds</div>';
+            result.results.worlds.forEach(world => {
+              html += `
+                <div class="world-card" onclick="window.location.href='${world.route || '#worlds'}'">
+                  <div class="world-name">${world.displayName || world.name}</div>
+                  <div class="world-description">${world.description || ''}</div>
+                </div>
+              `;
+            });
+            html += '</div>';
+          }
+
+          // Show movies
+          if (result.results.movies && result.results.movies.length > 0) {
+            html += '<div class="results-section">';
+            html += '<div class="section-title">Movies</div>';
+            html += '<div class="media-grid">';
+            result.results.movies.forEach(movie => {
+              const videoUrl = movie.hlsUrl || movie.url || '';
+              let videoId = '';
+              if (videoUrl && typeof videoUrl === 'string') {
+                if (videoUrl.includes('embed/')) {
+                  videoId = videoUrl.split('embed/')[1].split('?')[0].split('&')[0];
+                } else if (videoUrl.includes('watch?v=')) {
+                  videoId = videoUrl.split('watch?v=')[1].split('&')[0].split('#')[0];
+                } else if (videoUrl.includes('youtu.be/')) {
+                  videoId = videoUrl.split('youtu.be/')[1].split('?')[0].split('&')[0];
+                }
+              }
+              // Priority: 1) Local poster (posterUrl with posters/), 2) posterUrl, 3) YouTube thumbnail, 4) thumbnailUrl, 5) placeholder
+              let thumbnail = '';
+              
+              // Check for local poster file first (if posterUrl points to posters/ folder)
+              if (movie.posterUrl && movie.posterUrl.includes('posters/')) {
+                thumbnail = movie.posterUrl;
+              } else if (movie.posterUrl && !movie.posterUrl.includes('placehold')) {
+                thumbnail = movie.posterUrl;
+              } else if (videoId && videoId.length === 11) {
+                thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+              } else if (movie.thumbnailUrl && !movie.thumbnailUrl.includes('placehold')) {
+                thumbnail = movie.thumbnailUrl;
+              } else {
+                thumbnail = 'https://placehold.co/300x450/0f172a/ffffff?text=HalfMovie';
+              }
+              
+              html += `
+                <a href="movie.html?id=${encodeURIComponent(movie.id)}" class="media-card">
+                  <div class="media-poster" style="background-image: url('${thumbnail}')"></div>
+                  <div class="media-body">
+                    <div class="media-title">${movie.title || 'Untitled'}</div>
+                    <div class="media-meta">${(movie.genres || []).slice(0, 2).join(' • ')} ${movie.year ? '• ' + movie.year : ''}</div>
+                  </div>
+                </a>
+              `;
+            });
+            html += '</div></div>';
+          }
+
+          if (!html) {
+            html = `
+              <div class="no-results">
+                <div class="no-results-title">No exact matches found</div>
+                <p>But we have some suggestions for you below.</p>
+              </div>
+            `;
+          }
+        }
+
+        document.getElementById('results-container').innerHTML = html || `
+          <div class="no-results">
+            <div class="no-results-title">No results found</div>
+            <p>Try a different search term or explore our worlds.</p>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Search error:', error);
+        document.getElementById('results-container').innerHTML = `
+          <div class="no-results">
+            <div class="no-results-title">Search error</div>
+            <p>Please try again later.</p>
+          </div>
+        `;
+      }
+    })();
+  </script>
+</body>
+</html>
+

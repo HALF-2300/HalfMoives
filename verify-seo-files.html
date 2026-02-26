@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO Files Verification - HalfMovies</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #050712;
+      color: #f9fbff;
+    }
+    h1 {
+      color: #ff4b8b;
+      margin-bottom: 30px;
+    }
+    .test-item {
+      background: #0c1023;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    .status.pending {
+      background: #4b9dff;
+      color: white;
+    }
+    .status.success {
+      background: #10b981;
+      color: white;
+    }
+    .status.error {
+      background: #ef4444;
+      color: white;
+    }
+    .url {
+      color: #4b9dff;
+      word-break: break-all;
+      margin: 10px 0;
+    }
+    .details {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: monospace;
+    }
+    button {
+      background: #ff4b8b;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0;
+    }
+    button:hover {
+      background: #ff6ba3;
+    }
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+    .instructions {
+      background: rgba(75, 157, 255, 0.1);
+      border-left: 4px solid #4b9dff;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 SEO Files Verification</h1>
+  
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ol>
+      <li>Click "Test All URLs" below</li>
+      <li>Check HTTP status codes (should be 200)</li>
+      <li>Screenshot the results if needed</li>
+      <li>If any file shows 404, upload it to /public_html/</li>
+    </ol>
+  </div>
+
+  <button id="testBtn" onclick="testAll()">Test All URLs</button>
+
+  <div id="results"></div>
+
+  <script>
+    async function testURL(url, name) {
+      const resultDiv = document.createElement('div');
+      resultDiv.className = 'test-item';
+      resultDiv.innerHTML = `
+        <strong>${name}</strong>
+        <span class="status pending">Testing...</span>
+        <div class="url">${url}</div>
+        <div class="details" id="details-${name.replace(/\s/g, '-')}">Loading...</div>
+      `;
+      document.getElementById('results').appendChild(resultDiv);
+      
+      try {
+        const startTime = Date.now();
+        const response = await fetch(url, {
+          method: 'HEAD',
+          mode: 'no-cors' // Use no-cors to avoid CORS issues
+        });
+        
+        // Since we can't read status with no-cors, try GET instead
+        const getResponse = await fetch(url, {
+          method: 'GET',
+          cache: 'no-store'
+        });
+        
+        const endTime = Date.now();
+        const status = getResponse.status;
+        const statusText = getResponse.statusText;
+        
+        const statusSpan = resultDiv.querySelector('.status');
+        const detailsDiv = resultDiv.querySelector('.details');
+        
+        if (status === 200) {
+          statusSpan.className = 'status success';
+          statusSpan.textContent = `✅ HTTP ${status}`;
+          detailsDiv.innerHTML = `
+            <strong>Status:</strong> ${status} ${statusText}<br>
+            <strong>Response Time:</strong> ${endTime - startTime}ms<br>
+            <strong>Content-Type:</strong> ${getResponse.headers.get('content-type') || 'N/A'}<br>
+            <strong>Result:</strong> File is live and accessible ✅
+          `;
+        } else {
+          statusSpan.className = 'status error';
+          statusSpan.textContent = `❌ HTTP ${status}`;
+          detailsDiv.innerHTML = `
+            <strong>Status:</strong> ${status} ${statusText}<br>
+            <strong>Result:</strong> File not found or blocked ❌<br>
+            <strong>Action:</strong> Upload file to /public_html/${name.toLowerCase().replace(' ', '.')}
+          `;
+        }
+      } catch (error) {
+        const statusSpan = resultDiv.querySelector('.status');
+        const detailsDiv = resultDiv.querySelector('.details');
+        statusSpan.className = 'status error';
+        statusSpan.textContent = '❌ Error';
+        detailsDiv.innerHTML = `
+          <strong>Error:</strong> ${error.message}<br>
+          <strong>Possible Causes:</strong><br>
+          - File not uploaded to /public_html/<br>
+          - CORS/security blocking the request<br>
+          - Network error<br>
+          <strong>Action:</strong> Check manually in browser: <a href="${url}" target="_blank">${url}</a>
+        `;
+      }
+    }
+
+    async function testAll() {
+      const btn = document.getElementById('testBtn');
+      btn.disabled = true;
+      btn.textContent = 'Testing...';
+      
+      document.getElementById('results').innerHTML = '';
+      
+      await testURL('https://halfmovies.com/robots.txt', 'robots.txt');
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await testURL('https://halfmovies.com/sitemap.xml', 'sitemap.xml');
+      
+      btn.disabled = false;
+      btn.textContent = 'Test All URLs';
+    }
+
+    // Auto-test on load
+    window.addEventListener('load', () => {
+      setTimeout(testAll, 500);
+    });
+  </script>
+</body>
+</html>
+

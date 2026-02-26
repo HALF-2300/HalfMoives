@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Shout! Studios FULL MOVIES",
+    "playlistUrl": "https://www.youtube.com/playlist?list=PLBrrfZs-ew7Pk7PPMeAEOCcCdW_Lqo3HX",
+    "playlistId": "PLBrrfZs-ew7Pk7PPMeAEOCcCdW_Lqo3HX",
+    "feedUrl": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLBrrfZs-ew7Pk7PPMeAEOCcCdW_Lqo3HX"
+  },
+  {
+    "name": "Shout! Studios Action FULL MOVIES",
+    "playlistUrl": "https://www.youtube.com/playlist?list=PLBrrfZs-ew7PDeUmZnKLErFZF-_wyeDn4",
+    "playlistId": "PLBrrfZs-ew7PDeUmZnKLErFZF-_wyeDn4",
+    "feedUrl": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLBrrfZs-ew7PDeUmZnKLErFZF-_wyeDn4"
+  },
+  {
+    "name": "Popcornflix Action FULL MOVIES",
+    "playlistUrl": "https://www.youtube.com/playlist?list=PLsZQnDqnebk4kN-oGYb2JmTU0ofZHqZTg",
+    "playlistId": "PLsZQnDqnebk4kN-oGYb2JmTU0ofZHqZTg",
+    "feedUrl": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLsZQnDqnebk4kN-oGYb2JmTU0ofZHqZTg"
+  },
+  {
+    "name": "Popcornflix Thriller FULL MOVIES",
+    "playlistUrl": "https://www.youtube.com/playlist?list=PLsZQnDqnebk4ag9hhJd2AWerYn0CTzK5L",
+    "playlistId": "PLsZQnDqnebk4ag9hhJd2AWerYn0CTzK5L",
+    "feedUrl": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLsZQnDqnebk4ag9hhJd2AWerYn0CTzK5L"
+  },
+  {
+    "name": "Popcornflix Fan Favorites FULL MOVIES",
+    "playlistUrl": "https://www.youtube.com/playlist?list=PLsZQnDqnebk5_Fet216jHO0j7st2CU9Ue",
+    "playlistId": "PLsZQnDqnebk5_Fet216jHO0j7st2CU9Ue",
+    "feedUrl": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLsZQnDqnebk5_Fet216jHO0j7st2CU9Ue"
+  },
+  {
+    "name": "Full Moon Features FULL MOVIES",
+    "playlistUrl": "https://www.youtube.com/playlist?list=PLHI-eVeyp_t2tUUPCROOPkXrnK387xI5Y",
+    "playlistId": "PLHI-eVeyp_t2tUUPCROOPkXrnK387xI5Y",
+    "feedUrl": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLHI-eVeyp_t2tUUPCROOPkXrnK387xI5Y"
+  }
+]
