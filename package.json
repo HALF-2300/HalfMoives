@@ -8,7 +8,7 @@
     "start": "node server.js",
     "proxy": "node proxy.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/copy-movies-for-build.cjs && vite build",
     "preview": "vite preview",
     "make:channels": "node ./make-channels-1000.mjs",
     "pull:youtube": "node pull-youtube-movies.cjs",
